@@ -1,0 +1,26 @@
+<table th:fragment="classes-list" class="table-style">
+    <thead>
+    <tr class="first-row">
+        <td>Class code</td>
+        <td>Program</td>
+        <td>Faculty</td>
+        <td># of students</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each=" studentClass : ${studentClasses}">
+        <td ><a th:href="@{/class/{id}(id=${studentClass.classId})}" th:text="${studentClass.classCode}"></a> </td>
+        <td th:text="${studentClass.program}"> </td>
+        <td th:text="${studentClass.faculty}"> </td>
+        <td th:text="${studentClass.students.size()}"></td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr class="first-row">
+        <td>Class code</td>
+        <td>Program</td>
+        <td>Faculty</td>
+        <td># of students</td>
+    </tr>
+    </tfoot>
+</table>

@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Students Classes</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <div th:insert="fragments/sidebar :: sidebar"></div>
+    </div>
+    <div id="page-content-wrapper">
+        <div id="page-content">
+                <div class="row">
+                    <div class="col-md-12 main-content main-center">
+                        <a class="button-style" style="position: absolute; top: 5px; right: 5px" href="/class/add">Add Class</a>
+                        <h1>Classes list</h1>
+                        <div th:insert="fragments/classes-list-fragment"></div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

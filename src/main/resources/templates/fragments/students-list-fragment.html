@@ -1,0 +1,54 @@
+<div th:fragment="students-list">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 mt-5 mb-5">
+        <h3>Datatable using list of Objects in data parameter</h3>
+        <table id="student-list" class="table-style">
+          <thead>
+          <tr class="first-row">
+            <td>Name</td>
+            <td>Class</td>
+            <td>Program</td>
+            <td>Faculty</td>
+            <td>Birthday</td>
+            <td>Avg. mark</td>
+            <td>Attend. %</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each=" student : ${students}">
+            <td ><a th:href="@{/student/{id} (id = ${student.studentId})}" th:text="${student.lastName} + ' ' + ${student.firstName}"></a></td>
+            <td th:text="${student.studentClass.classCode}"></td>
+            <td th:text="${student.studentClass.program}"></td>
+            <td th:text="${student.studentClass.faculty}"></td>
+            <td th:text="${student.birthday}"> </td>
+            <td th:text="${student.avgMark}"></td>
+            <td th:text="${student.attendancePercentage} + '%'"></td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr class="first-row">
+            <td>Name</td>
+            <td>Class</td>
+            <td>Program</td>
+            <td>Faculty</td>
+            <td>Birthday</td>
+            <td>Avg. mark</td>
+            <td>Attend. %</td>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#student-list').DataTable({
+        "dom": "tp",
+        "ordering": false,
+        "pagingType": "simple",
+        "lengthMenu": [ 1 ]
+      });
+    });
+  </script>
+</div>

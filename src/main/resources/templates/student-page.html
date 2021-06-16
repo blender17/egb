@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title th:if="${student.middleName != null}" th:text="${student.firstName} + ' ' + ${student.middleName.substring(0, 1)} + '. ' + ${student.lastName}"></title>
+    <title th:unless="${student.middleName != null}" th:text="${student.firstName} + ' ' + ' ' + ${student.lastName}"></title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <div th:insert="fragments/sidebar :: sidebar"></div>
+    </div>
+    <div id="page-content-wrapper">
+        <div id="page-content">
+            <div class="row">
+                <div class="col-md-12 main-content">
+                    <a th:onclick="'javascript:deleteStudent(\''+ '/student/' + ${student.studentId} + '/delete' +'\');'"
+                       class="button-style" style="position: absolute; top: 5px; right: 130px; background-color: #D72729;">Delete student</a>
+
+                    <a th:href="@{/student/{id}/edit (id=${student.studentId})}" class="button-style" style="position: absolute; top: 5px; right: 5px;">Edit student</a>
+
+                    <div class="content-card"><img th:src="${student.photoUrl}" alt="" class="photo"></div>
+
+                    <h1 th:if="${student.middleName != null}" th:text="${student.firstName} + ' ' + ${student.middleName.substring(0, 1)}
+                    + '. ' + ${student.lastName}" style="margin-top: 20px; margin-left: 260px"></h1>
+                    <h1 th:unless="${student.middleName != null}" th:text="${student.firstName} + ' ' + ${student.lastName}"
+                        style="margin-top: 20px; margin-left: 260px"></h1>
+
+                    <div class="content-card">
+                        <p th:text="'Birthday: ' + ${student.birthday} + ' (' + ${age} + ' years)' "></p>
+                        <p th:text="'Gender: ' + ${student.gender}"></p>
+                        <p th:text="'Phone number: ' + ${student.contacts.phoneNumber}"></p>
+                        <p>Email: <a th:href="'mailto:' + ${student.contacts.email}" th:text="${student.contacts.email}"></a></p>
+                    </div>
+
+                    <div class="content-card">
+                        <div id="chart_line"></div>
+                        <div id="chart_col"></div>
+                    </div>
+
+                    <div class="content-card">
+                        <table class="table-style">
+                            <thead>
+                            <tr class="first-row">
+                                <td>Subject</td>
+                                <td>Average mark</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each=" subjectsMark : ${avgMarksBySubject}">
+                                <td th:text="${subjectsMark.subject}"> </td>
+                                <td th:text="${subjectsMark.avgMark}"> </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table class="table-style" dt:table="true" style="margin-top: 20px">
+                            <thead>
+                            <tr class="first-row">
+                                <td>Subject</td>
+                                <td>Attendance</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each=" subjectsAttendance : ${attendanceBySubject}">
+                                <td th:text="${subjectsAttendance.subject}"> </td>
+                                <td th:text="${subjectsAttendance.getStatistic() + '%'}"> </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="addInfo">
+                        <div>
+                            <p th:text="'Faculty: ' + ${student.studentClass.faculty}"></p>
+                            <p th:text="'Program: ' + ${student.studentClass.program}"></p>
+                            <p th:text="'Class: ' + ${student.studentClass.classCode}"></p>
+                            <p th:text="'Average mark: ' +${avgMark}"></p>
+                            <p th:text="'Attendance percentage: ' + ${attendance} + '%'"></p>
+                        </div>
+                        <hr>
+                        <div style="clear: both">
+                            <p th:text="'Country: ' + ${student.contacts.country}"></p>
+                            <p th:text="'State: ' + ${student.contacts.state}"></p>
+                            <p th:text="'Address: ' + ${student.contacts.address}"></p>
+                            <p th:text="'ZIP-code: ' +${student.contacts.zipCode}"></p>
+                        </div>
+                        <hr>
+                        <div style="clear: both">
+                            <p th:text="'Father name: ' + ${student.contacts.fatherName}"></p>
+                            <p th:text="'Father phone number: ' + ${student.contacts.fatherPhoneNumber}"></p>
+                            <p th:text="'Mother name: ' + ${student.contacts.motherName}"></p>
+                            <p th:text="'Mother phone number: ' + ${student.contacts.motherPhoneNumber}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+
+    const col_chart_data = /*[[${monthlyAttendance}]]*/'noValue';
+
+    google.charts.load('current', {packages: ['corechart', 'line']});
+    google.charts.setOnLoadCallback(drawBasic);
+    google.charts.load('current', {packages: ['corechart', 'bar']});
+    google.charts.setOnLoadCallback(drawMaterial);
+
+    function drawMaterial() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Month');
+        data.addColumn('number', 'Attendance');
+
+        Object.keys(col_chart_data).forEach(function(key) {
+            data.addRow([key, col_chart_data[key]]);
+        });
+
+        var options = {
+            legend: { position: "none" },
+        };
+
+        var materialChart = new google.charts.Bar(document.getElementById('chart_col'));
+        google.visualization.events.addListener(materialChart, 'select', function () {materialChart.setSelection([]);});
+        materialChart.draw(data, options);
+    }
+
+    function drawBasic() {
+        const line_chart_data = /*[[${avgMarksByMonth}]]*/'noValue';
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Month');
+        data.addColumn('number', 'Mark');
+
+        Object.keys(col_chart_data).forEach(function(key) {
+            data.addRow([key, line_chart_data[key]]);
+        });
+
+        var options = {
+            legend: { position: "none" },
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_line'));
+        google.visualization.events.addListener(chart, 'select', function () {chart.setSelection([]);});
+
+        chart.draw(data, options);
+    }
+
+    function deleteStudent(url) {
+        let result = confirm("Delete student?");
+        if (result) {
+            let request = new XMLHttpRequest();
+            request.open("DELETE", url, true);
+            request.send();
+            location.href = "/";
+        }
+    }
+</script>
+</body>
+</html>

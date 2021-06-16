@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Add new teacher</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <div th:insert="fragments/sidebar :: sidebar"></div>
+        </div>
+        <div id="page-content-wrapper">
+            <div id="page-content">
+                    <div class="row">
+                        <div class="col-md-12 main-content main-center">
+                            <h1>Add new teacher</h1>
+                            <form action="#" th:action="@{/teacher/add}" th:object="${teacher}" method="post">
+                                <div class="two-column">
+                                    <div class="column">
+                                        <label for="firstName">First name:</label>
+                                        <input id="firstName" required type="text" th:field="*{firstName}" />
+                                        <br>
+                                        <label for="lastName">Last name:</label>
+                                        <input id="lastName" required type="text" th:field="*{lastName}" />
+                                        <br>
+                                        <label for="middleName">Last name:</label>
+                                        <input id="middleName" required type="text" th:field="*{middleName}" />
+                                        <br>
+                                        <label for="position">Position:</label>
+                                        <input id="position" required th:field="*{position}" type="text">
+                                        <br>
+                                        <label for="academicDegree"> Academic degree:</label>
+                                        <input id="academicDegree" required th:field="*{academicDegree}" type="text">
+                                        <br>
+                                        <label for="gender">Gender:</label>
+                                        <select id="gender" required th:field="*{gender}">
+                                            <option th:value="'M'" th:text="Male"></option>
+                                            <option th:value="'F'" th:text="Female"></option>
+                                        </select>
+                                        <br>
+                                        <label for="birthday"> Birthday:</label>
+                                        <input id="birthday" th:field="*{birthday}" required type="date" value="2000-01-01">
+                                        <br>
+                                        <label for="phoneNumber"> Phone number:</label>
+                                        <input id="phoneNumber" required th:field="*{phoneNumber}" type="text">
+                                        <br>
+                                        <label for="email"> Email:</label>
+                                        <input id="email" required th:field="*{email}" type="text">
+                                        <br>
+                                        <label for="address"> Address:</label>
+                                        <input id="address" required th:field="*{address}" type="text">
+                                        <br>
+                                    </div>
+                                </div>
+                                <input type="submit" value="Add teacher" style="text-align: center">
+                            </form>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

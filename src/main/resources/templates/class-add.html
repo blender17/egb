@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Add new student class</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <div th:insert="fragments/sidebar :: sidebar"></div>
+    </div>
+    <div id="page-content-wrapper">
+        <div id="page-content">
+                <div class="row">
+                    <div class="col-md-12 main-content main-center">
+                        <h1>Add new class</h1>
+                        <form action="#" th:action="@{/class/add}" th:object="${studentClass}" method="post" style="text-align: right; width: 60%">
+
+                            <label>Class code:
+                                <input required type="text" th:field="*{classCode}" />
+                            </label>
+                            <br>
+                            <label>Program:
+                                <input required list="program" th:field="*{program}" class="input-style">
+                                <datalist id="program" th:each="program : ${programList}" >
+                                    <option th:value="program">
+                                </datalist>
+                            </label>
+                            <br>
+                            <label>Faculty:
+                                <input required list="faculty" th:field="*{faculty}" class="input-style">
+                                <datalist id="faculty" th:each="faculty : ${facultyList}" >
+                                    <option th:value="faculty">
+                                </datalist>
+                            </label>
+                            <br>
+                            <input type="submit" value="Add class" style="text-align: center">
+
+                        </form>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

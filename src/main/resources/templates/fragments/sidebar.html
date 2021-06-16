@@ -1,0 +1,49 @@
+<div th:fragment="sidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar-nav" style="width: 250px; height: 100%;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+      <img th:src="@{/images/book-icon.png}" style="margin-right: 5px; margin-top: 5px" width="40" height="32" alt="">
+      <span class="fs-4">EGB</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="/" class="nav-link active" aria-current="page">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+          Home
+        </a>
+      </li>
+      <li>
+        <a href="/gradebooks" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+          Gradebooks
+        </a>
+      </li>
+      <li>
+        <a href="/attendance" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+          Attendance
+        </a>
+      </li>
+      <li>
+        <a href="/classes" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+          Classes
+        </a>
+      </li>
+    </ul>
+  <a class="gh-btn" href="https://github.com/blender17/egb" rel="noopener noreferrer" target="_blank" aria-label="Source code">
+    <span class="gh-ico" aria-hidden="true"></span>
+    <span class="gh-text">Source code</span>
+  </a>
+    <hr>
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://image.flaticon.com/icons/png/512/1995/1995413.png" alt="" width="32" height="32" class="rounded-circle me-2">
+        <strong th:text="${username}"></strong>
+      </a>
+      <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+        <li><a class="dropdown-item" href="/settings">Settings</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Sign out</a></li>
+      </ul>
+    </div>
+</div>

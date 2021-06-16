@@ -1,151 +1,60 @@
 package com.blender.egb.model;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@ToString(exclude = {"contacts", "marks"})
 @Entity
-public class Student implements Serializable {
+public class Student {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(updatable = false, nullable = false)
 	private Long studentId;
+
+	@NonNull
 	private String firstName;
+
+	@NonNull
 	private String lastName;
-	private Integer classCode;
-	private String faculty;
+
+	private String middleName;
+
+	@Basic(fetch = FetchType.LAZY)
 	private String status;
+
+	@NonNull
 	private String gender;
+
+	@NonNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate birthday;
+
+	@Nullable
+	@Basic(fetch = FetchType.LAZY)
+	private String photoUrl;
+
 	@Embedded
 	private Contacts contacts;
-	@OneToMany(mappedBy = "student")
+
+	@ManyToOne
+	@JoinColumn(name = "class_id",foreignKey = @ForeignKey(name = "FK_student_class"))
+	private StudentClass studentClass;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
 	private List<Mark> marks;
-	@OneToMany(mappedBy = "student")
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
 	private List<Attendance> attendances;
 
-	public Student() {}
-
-	public Student(String firstName, String lastName, Integer classCode,
-	               String faculty, String status, String gender,
-	               Contacts contacts, List<Mark> marks, List<Attendance> attendances) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.classCode = classCode;
-		this.faculty = faculty;
-		this.status = status;
-		this.gender = gender;
-		this.contacts = contacts;
-		this.marks = marks;
-		this.attendances = attendances;
-	}
-
-	public Long getStudentId() {
-		return studentId;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public Integer getClassCode() {
-		return classCode;
-	}
-
-	public void setClassCode(Integer classCode) {
-		this.classCode = classCode;
-	}
-
-	public String getFaculty() {
-		return faculty;
-	}
-
-	public void setFaculty(String faculty) {
-		this.faculty = faculty;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public Contacts getContacts() {
-		return contacts;
-	}
-
-	public void setContacts(Contacts contacts) {
-		this.contacts = contacts;
-	}
-
-	public List<Mark> getMarks() {
-		return marks;
-	}
-
-	public void setMarks(List<Mark> marks) {
-		this.marks = marks;
-	}
-
-	public List<Attendance> getAttendances() {
-		return attendances;
-	}
-
-	public void setAttendances(List<Attendance> attendances) {
-		this.attendances = attendances;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Student student = (Student) o;
-		return studentId.equals(student.studentId) && firstName.equals(student.firstName)
-				&& lastName.equals(student.lastName) && classCode.equals(student.classCode)
-				&& faculty.equals(student.faculty) && status.equals(student.status)
-				&& gender.equals(student.gender) && contacts.equals(student.contacts)
-				&& Objects.equals(marks, student.marks) && Objects.equals(attendances, student.attendances);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(studentId, firstName, lastName, classCode, faculty, status, gender, contacts, marks, attendances);
-	}
-
-	@Override
-	public String toString() {
-		return "Student{" +
-				"studentId=" + studentId +
-				", firstName='" + firstName + '\'' +
-				", lastName='" + lastName + '\'' +
-				", classCode=" + classCode +
-				", faculty='" + faculty + '\'' +
-				", status='" + status + '\'' +
-				", gender='" + gender + '\'' +
-				", contacts=" + contacts +
-				", marks=" + marks +
-				", attendances=" + attendances +
-				'}';
-	}
 }
