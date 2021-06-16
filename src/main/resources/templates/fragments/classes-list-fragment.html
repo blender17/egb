@@ -1,26 +1,31 @@
-<table th:fragment="classes-list" class="table-style">
-    <thead>
-    <tr class="first-row">
-        <td>Class code</td>
-        <td>Program</td>
-        <td>Faculty</td>
-        <td># of students</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each=" studentClass : ${studentClasses}">
-        <td ><a th:href="@{/class/{id}(id=${studentClass.classId})}" th:text="${studentClass.classCode}"></a> </td>
-        <td th:text="${studentClass.program}"> </td>
-        <td th:text="${studentClass.faculty}"> </td>
-        <td th:text="${studentClass.students.size()}"></td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr class="first-row">
-        <td>Class code</td>
-        <td>Program</td>
-        <td>Faculty</td>
-        <td># of students</td>
-    </tr>
-    </tfoot>
-</table>
+<div th:fragment="classes-list">
+    <!--  datatables  -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+    <!--  datatables  -->
+    <table id="classes-list"  class="table-style">
+        <thead>
+        <tr class="first-row">
+            <td>Class code</td>
+            <td>Program</td>
+            <td>Faculty</td>
+            <td># of students</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each=" studentClass : ${studentClasses}">
+            <td ><a th:href="@{/class/{id}(id=${studentClass.classId})}" th:text="${studentClass.classCode}"></a> </td>
+            <td th:text="${studentClass.program}"> </td>
+            <td th:text="${studentClass.faculty}"> </td>
+            <td th:text="${studentClass.students.size()}"></td>
+        </tr>
+        </tbody>
+        <hr>
+    </table>
+    <script th:inline="javascript">
+        $(document).ready(function() {
+            $('#classes-list').DataTable();
+        } );
+    </script>
+</div>
