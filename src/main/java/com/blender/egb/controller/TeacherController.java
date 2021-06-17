@@ -39,7 +39,7 @@ public class TeacherController {
 	@PostMapping("/teacher/add")
 	public String addTeacher(@ModelAttribute Teacher teacher, Model model) {
 		teacherRepository.save(teacher);
-		return "redirect:/";
+		return "redirect:/home";
 	}
 
 }

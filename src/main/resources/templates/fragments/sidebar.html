@@ -43,7 +43,12 @@
       <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
         <li><a class="dropdown-item" href="/settings">Settings</a></li>
         <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="#">Sign out</a></li>
+        <li>
+          <form th:action="@{/logout}" method="post">
+            <input class="dropdown-item" type="submit" value="Sign Out"/>
+          </form>
+<!--          <a class="dropdown-item" href="#">Sign out</a>-->
+        </li>
       </ul>
     </div>
 </div>
