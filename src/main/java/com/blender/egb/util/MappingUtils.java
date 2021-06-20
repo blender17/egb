@@ -18,8 +18,8 @@ public class MappingUtils {
 		studentDTO.setGender(student.getGender());
 		studentDTO.setBirthday(student.getBirthday());
 		studentDTO.setStudentClass(student.getStudentClass());
-		studentDTO.setAvgMark(Utils.avgMark(student.getMarks()));
-		studentDTO.setAttendancePercentage(Utils.attendancePercentage(student.getAttendances()));
+		studentDTO.setAvgMark(Utils.avgMark(student.getGradebooks()));
+		studentDTO.setAttendancePercentage(Utils.attendancePercentage(student.getGradebooks()));
 		return studentDTO;
 	}
 

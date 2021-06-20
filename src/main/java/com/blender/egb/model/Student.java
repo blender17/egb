@@ -13,7 +13,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@ToString(exclude = {"contacts", "marks"})
+@ToString(exclude = {"contacts", "gradebooks"})
 @Entity
 public class Student {
 
@@ -52,9 +52,6 @@ public class Student {
 	private StudentClass studentClass;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
-	private List<Mark> marks;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
-	private List<Attendance> attendances;
+	private List<Gradebook> gradebooks;
 
 }

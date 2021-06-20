@@ -17,6 +17,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private UserService userService;
 
+
 	@Autowired
 	public void setUserService(UserService userService) {
 		this.userService = userService;
@@ -32,15 +33,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http
 				.authorizeRequests()
-					.antMatchers("/login")
-					.permitAll()
-					.antMatchers("/admin/**")
-					.hasRole("ADMIN")
-				.anyRequest()
-					.authenticated()
+					.antMatchers("/login", "/registration").permitAll()
+					.antMatchers("/admin/**").hasRole("ADMIN")
+				.anyRequest().authenticated()
 				.and()
 					.formLogin()
 					.loginPage("/login")
+					.defaultSuccessUrl("/")
 					.permitAll()
 				.and()
 					.logout()
