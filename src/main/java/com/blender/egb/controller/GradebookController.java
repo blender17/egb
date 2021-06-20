@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class GradebookController {
 
-	@GetMapping("/gradebooks")
-	public String gradebooks(Model model) {
-		return "gradebooks";
+	@GetMapping("/gradebook")
+	public String gradebook(Model model) {
+		return "gradebook";
 	}
 }

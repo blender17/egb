@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class AttendanceController {
 
-	private final AttendanceRepository attendanceRepository;
+	private AttendanceRepository attendanceRepository;
 
 	@Autowired
-	public AttendanceController(AttendanceRepository attendanceRepository) {
+	public void setAttendanceController(AttendanceRepository attendanceRepository) {
 		this.attendanceRepository = attendanceRepository;
 	}
 

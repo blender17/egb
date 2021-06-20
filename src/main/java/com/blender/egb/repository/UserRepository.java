@@ -1,9 +1,12 @@
 package com.blender.egb.repository;
 
-import com.blender.egb.model.Teacher;
+import com.blender.egb.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TeacherRepository extends JpaRepository<Teacher, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
+
+	User findByUsername(String username);
+
 }

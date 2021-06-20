@@ -12,8 +12,8 @@ public class ClassesSubjects {
 	private StudentClassKey studentClassKey;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("teacherId")
-	private Teacher teacherId;
+	@MapsId("userId")
+	private User userId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("studentClassId")

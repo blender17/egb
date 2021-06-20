@@ -21,14 +21,14 @@ import java.util.stream.Collectors;
 @Controller
 public class StudentClassController {
 
-	public final StudentClassRepository studentClassRepository;
+	private StudentClassRepository studentClassRepository;
 
 	@Autowired
-	public StudentClassController(StudentClassRepository studentClassRepository) {
+	public void setStudentClassController(StudentClassRepository studentClassRepository) {
 		this.studentClassRepository = studentClassRepository;
 	}
 
-	@GetMapping("/classes")
+	@GetMapping("/admin/classes")
 	public String studentClasses(Model model) {
 		Iterable<StudentClass> studentClasses = studentClassRepository.findAll();
 		model.addAttribute("studentClasses", studentClasses);
@@ -47,7 +47,7 @@ public class StudentClassController {
 		return "class";
 	}
 
-	@GetMapping("/class/add")
+	@GetMapping("/admin/class/add")
 	public String addStudent(Model model) {
 		Iterable<String> facultyList = studentClassRepository.fetchAllFaculties();
 		Iterable<String> programList = studentClassRepository.fetchAllPrograms();
@@ -57,7 +57,7 @@ public class StudentClassController {
 		return "class-add";
 	}
 
-	@PostMapping("/class/add")
+	@PostMapping("/admin/class/add")
 	public String addPostStudent(@ModelAttribute StudentClass studentClass, Model model) {
 		studentClassRepository.save(studentClass);
 		return "redirect:/classes";

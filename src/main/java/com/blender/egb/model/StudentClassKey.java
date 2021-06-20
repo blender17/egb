@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Embeddable
 public class StudentClassKey implements Serializable {
 
-	private Long teacherId;
+	private Long userId;
 	private Long studentClassId;
 
 }

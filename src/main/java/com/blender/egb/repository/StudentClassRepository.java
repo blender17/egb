@@ -15,7 +15,7 @@ public interface StudentClassRepository extends JpaRepository<StudentClass, Long
 	@Query("SELECT distinct program from StudentClass order by program asc")
 	Iterable<String> fetchAllPrograms();
 
-	@Query("SELECT DISTINCT sc FROM StudentClass sc INNER JOIN sc.subjects t WHERE t.teacherId.teacherId = :teacherId")
-	Iterable<StudentClass> fetchAllClassesByTeacher(@Param("teacherId") long teacherId);
+	@Query("SELECT DISTINCT sc FROM StudentClass sc INNER JOIN sc.subjects t WHERE t.userId.userId = :userId")
+	Iterable<StudentClass> fetchAllClassesByTeacher(@Param("userId") long userId);
 
 }

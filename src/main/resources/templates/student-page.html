@@ -1,5 +1,7 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title th:if="${student.middleName != null}" th:text="${student.firstName} + ' ' + ${student.middleName.substring(0, 1)} + '. ' + ${student.lastName}"></title>
     <title th:unless="${student.middleName != null}" th:text="${student.firstName} + ' ' + ' ' + ${student.lastName}"></title>
@@ -19,11 +21,12 @@
         <div id="page-content">
             <div class="row">
                 <div class="col-md-12 main-content">
-                    <a th:onclick="'javascript:deleteStudent(\''+ '/student/' + ${student.studentId} + '/delete' +'\');'"
-                       class="button-style" style="position: absolute; top: 5px; right: 130px; background-color: #D72729;">Delete student</a>
+                    <div sec:authorize="hasRole('ADMIN')">
+                        <a th:onclick="'javascript:deleteStudent(\''+ '/student/' + ${student.studentId} + '/delete' +'\');'"
+                           class="button-style" style="position: absolute; top: 5px; right: 130px; background-color: #D72729;">Delete student</a>
 
-                    <a th:href="@{/student/{id}/edit (id=${student.studentId})}" class="button-style" style="position: absolute; top: 5px; right: 5px;">Edit student</a>
-
+                        <a th:href="@{/student/{id}/edit (id=${student.studentId})}" class="button-style" style="position: absolute; top: 5px; right: 5px;">Edit student</a>
+                    </div>
                     <div class="content-card"><img th:src="${student.photoUrl}" alt="" class="photo"></div>
 
                     <h1 th:if="${student.middleName != null}" th:text="${student.firstName} + ' ' + ${student.middleName.substring(0, 1)}

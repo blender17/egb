@@ -24,23 +24,32 @@ import java.util.stream.Collectors;
 @Controller
 public class StudentController {
 
-	private final StudentRepository studentRepository;
-	private final StudentClassRepository studentClassRepository;
-	private final AttendanceRepository attendanceRepository;
-	private final MarksRepository marksRepository;
-
+	private StudentRepository studentRepository;
+	private StudentClassRepository studentClassRepository;
+	private AttendanceRepository attendanceRepository;
+	private MarksRepository marksRepository;
 
 	@Autowired
-	public StudentController(StudentRepository studentRepository,
-	                         StudentClassRepository studentClassRepository, AttendanceRepository attendanceRepository, MarksRepository marksRepository) {
+	public void setStudentRepository(StudentRepository studentRepository) {
 		this.studentRepository = studentRepository;
+	}
+
+	@Autowired
+	public void setStudentClassRepository(StudentClassRepository studentClassRepository) {
 		this.studentClassRepository = studentClassRepository;
+	}
+
+	@Autowired
+	public void setAttendanceRepository(AttendanceRepository attendanceRepository) {
 		this.attendanceRepository = attendanceRepository;
+	}
+
+	@Autowired
+	public void setMarksRepository(MarksRepository marksRepository) {
 		this.marksRepository = marksRepository;
 	}
 
-
-	@GetMapping("/students")
+	@GetMapping("/admin/students")
 	public String showStudent(Model model) {
 		List<Student> students = studentRepository.findAll();
 		List<StudentDTO> studentsDTO = students.stream()
@@ -77,7 +86,7 @@ public class StudentController {
 		return "student-page";
 	}
 
-	@GetMapping("/student/add")
+	@GetMapping("/admin/student/add")
 	public String addStudent(Model model) {
 		Iterable<StudentClass> studentClasses = studentClassRepository.findAll();
 		model.addAttribute("studentClasses", studentClasses);
@@ -85,7 +94,7 @@ public class StudentController {
 		return "student-add";
 	}
 
-	@PostMapping("/student/add")
+	@PostMapping("/admin/student/add")
 	public String addPostStudent(@ModelAttribute("student") Student student,
 	                             @RequestParam(value = "classId")
 			                             Long classId, Model model) {
@@ -95,7 +104,7 @@ public class StudentController {
 		return "redirect:/students";
 	}
 
-	@DeleteMapping("/student/{id}/delete")
+	@DeleteMapping("/admin/student/{id}/delete")
 	public String deleteStudent(@PathVariable(value = "id") long id, Model model) {
 		studentRepository.deleteById(id);
 		return "redirect:/students";
