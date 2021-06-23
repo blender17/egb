@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
-    <title>Welcome, [[${#httpServletRequest.remoteUser}]]!</title>
     <meta charset="UTF-8" />
+    <title>Welcome, [[${#httpServletRequest.remoteUser}]]!</title>
     <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
@@ -17,7 +17,18 @@
                 <div class="row">
                     <div class="col-md-12 main-content main-center">
                         <h1>Your classes list</h1>
-                        <div th:insert="fragments/students-list-fragment"></div>
+                        <th:block th:each="studClass : ${studentClasses}">
+                            <div>
+                                <a th:text="${studClass.classCode}" th:href="@{/class/{id} (id = ${studClass.classId})}"></a>
+                                <table>
+                                <tr th:each="mapEntry : ${studClass.subjects}">
+                                    <td>
+                                        <a th:text="${mapEntry.value}" th:href="@{/gradebook/{class}/{subject} (class = ${studClass.classId}, subject = ${mapEntry.key})}"></a>
+                                    </td>
+                                <tr>
+                            </table>
+                            </div>
+                        </th:block>
                     </div>
                 </div>
         </div>

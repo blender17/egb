@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gradebook</title>
+
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <!--               bootstrap                     -->
+  <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
+  <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+  <div id="sidebar-wrapper">
+    <div th:insert="fragments/sidebar :: sidebar"></div>
+  </div>
+  <div id="page-content-wrapper">
+    <div id="page-content">
+      <div class="row">
+        <div class="col-md-12 main-content main-center">
+          <div>
+            <p>Users options</p>
+            <a th:href="@{/admin/user/add}">Add user or teacher</a>
+            <a th:href="@{/admin/student/add}">Add student</a>
+            <a th:href="@{/admin/users}">All users list</a>
+            <a th:href="@{/admin/teachers}">Teachers list</a>
+            <a th:href="@{/admin/students}">Students list</a>
+          </div>
+          <div>
+            <p>Classes options</p>
+          <a th:href="@{/admin/class/add}">Add class</a>
+          <a th:href="@{/admin/classes}">Classes list</a>
+          <a th:href="@{/admin/bind-teacher}">Bind teacher to class</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

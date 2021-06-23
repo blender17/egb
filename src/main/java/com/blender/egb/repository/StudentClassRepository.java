@@ -6,16 +6,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface StudentClassRepository extends JpaRepository<StudentClass, Long> {
 
 	@Query("SELECT distinct faculty from StudentClass order by faculty asc")
-	Iterable<String> fetchAllFaculties();
+	List<String> fetchAllFaculties();
 
 	@Query("SELECT distinct program from StudentClass order by program asc")
-	Iterable<String> fetchAllPrograms();
+	List<String> fetchAllPrograms();
 
 	@Query("SELECT DISTINCT sc FROM StudentClass sc INNER JOIN sc.subjects t WHERE t.userId.userId = :userId")
-	Iterable<StudentClass> fetchAllClassesByTeacher(@Param("userId") long userId);
+	List<StudentClass> getAllClassesByTeacherId(@Param("userId") long userId);
 
 }

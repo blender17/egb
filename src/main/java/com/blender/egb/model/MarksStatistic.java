@@ -4,7 +4,7 @@ import com.blender.egb.util.Utils;
 import lombok.Data;
 
 @Data
-public class MarksStatistic{
+public class MarksStatistic {
 
 	private String subject;
 	private double avgMark;

@@ -27,7 +27,7 @@ public class StudentClassController {
 	}
 
 	@GetMapping("/class/{id}")
-	public String showClass(@PathVariable(value = "id") long id, Model model) {
+	public String showClass(@PathVariable long id, Model model) {
 		Optional<StudentClass> studentClass = studentClassRepository.findById(id);
 		if (studentClass.isPresent()) {
 			Set<Student> students = studentClass.get().getStudents();

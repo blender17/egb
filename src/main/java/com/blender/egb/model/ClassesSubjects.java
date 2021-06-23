@@ -3,10 +3,11 @@ package com.blender.egb.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
 @Entity
-public class ClassesSubjects {
+public class ClassesSubjects implements Serializable {
 
 	@EmbeddedId
 	private StudentClassKey studentClassKey;
@@ -19,5 +20,6 @@ public class ClassesSubjects {
 	@MapsId("studentClassId")
 	private StudentClass studentClassId;
 
-	private String subject;
+	@ManyToOne
+	private Subject subject;
 }

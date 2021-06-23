@@ -13,14 +13,16 @@ public class Gradebook {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(updatable = false, nullable = false)
 	private Long id;
-	private String subject;
 	private Integer mark;
 	private Boolean attend;
 	private LocalDate date;
-	private Integer ClassCode;
+	private Long classCode;
 	private String topic;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "student_id", foreignKey = @ForeignKey(name = "FK_student"))
 	private Student student;
+
+	@ManyToOne
+	private Subject subject;
 
 }

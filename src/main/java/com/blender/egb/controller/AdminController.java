@@ -41,6 +41,11 @@ public class AdminController {
 
 	//Admin functions for students
 
+	@GetMapping("/admin")
+	public String adminPage(Model model) {
+		return "admin";
+	}
+
 	@GetMapping("/admin/students")
 	public String showStudent(Model model) {
 		List<Student> students = studentRepository.findAll();
@@ -60,18 +65,17 @@ public class AdminController {
 
 	@PostMapping("/admin/student/add")
 	public String addPostStudent(@ModelAttribute("student") Student student,
-	                             @RequestParam(value = "classId")
-			                             Long classId, Model model) {
+	                             @RequestParam Long classId, Model model) {
 		StudentClass studentClass = studentClassRepository.findById(classId).orElseThrow();
 		student.setStudentClass(studentClass);
 		studentRepository.save(student);
-		return "redirect:/students";
+		return "redirect:/admin";
 	}
 
 	@DeleteMapping("/admin/student/{id}/delete")
-	public String deleteStudent(@PathVariable(value = "id") long id, Model model) {
+	public String deleteStudent(@PathVariable long id, Model model) {
 		studentRepository.deleteById(id);
-		return "redirect:/students";
+		return "redirect:/admin/students";
 	}
 
 	//Admin functions for student classes
@@ -96,7 +100,7 @@ public class AdminController {
 	@PostMapping("/admin/class/add")
 	public String postStudentToClass(@ModelAttribute StudentClass studentClass, Model model) {
 		studentClassRepository.save(studentClass);
-		return "redirect:/classes";
+		return "redirect:/admin";
 	}
 
 	//Admin functions for users
@@ -108,7 +112,7 @@ public class AdminController {
 	}
 
 	@PostMapping("/admin/user/add")
-	public String addUser(@ModelAttribute User user, @RequestParam(value = "role") String role, BindingResult bindingResult, Model model) {
+	public String addUser(@ModelAttribute User user, @RequestParam String role, BindingResult bindingResult, Model model) {
 
 		if (bindingResult.hasErrors()) {
 			return "user-add";
@@ -124,7 +128,7 @@ public class AdminController {
 			return "user-add";
 		}
 
-		return "redirect:/";
+		return "redirect:/admin";
 	}
 
 }

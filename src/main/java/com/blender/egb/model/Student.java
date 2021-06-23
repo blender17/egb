@@ -1,5 +1,6 @@
 package com.blender.egb.model;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -8,6 +9,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString(exclude = {"contacts", "gradebooks"})
 @Entity
-public class Student {
+public class Student implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,7 +30,11 @@ public class Student {
 	@NonNull
 	private String lastName;
 
+	@Nullable
 	private String middleName;
+
+	@Transient
+	private String name;
 
 	@Basic(fetch = FetchType.LAZY)
 	private String status;
@@ -54,4 +60,12 @@ public class Student {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
 	private List<Gradebook> gradebooks;
 
+	public String getName() {
+		if (!(middleName == null)) {
+			name = firstName + " " + middleName.charAt(0) + ". " + lastName;
+		} else {
+			name = firstName + " " + lastName;
+		}
+		return name;
+	}
 }

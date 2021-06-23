@@ -14,9 +14,9 @@ import java.util.List;
 public interface GradebookRepository extends JpaRepository<Gradebook, Long> {
 
 	@SuppressWarnings("SpringDataRepositoryMethodReturnTypeInspection")
-	@Query("SELECT new com.blender.egb.model.Statistic(g.subject, " +
+	@Query("SELECT new com.blender.egb.model.Statistic(g.subject.name, " +
 			"COUNT(g.attend), SUM(CASE WHEN g.attend = true THEN 1 ELSE 0 END)) " +
-			"FROM Gradebook g WHERE g.student.studentId = :studentId GROUP BY g.subject")
+			"FROM Gradebook g WHERE g.student.studentId = :studentId GROUP BY g.subject.name")
 	List<Statistic> getSubjectsAttendanceByStudentId(@Param("studentId") long studentId);
 
 	@SuppressWarnings("SpringDataRepositoryMethodReturnTypeInspection")
@@ -28,8 +28,8 @@ public interface GradebookRepository extends JpaRepository<Gradebook, Long> {
 	                                              @Param("startDate") LocalDate startDate, @Param("endDate")LocalDate endDate);
 
 	@SuppressWarnings("SpringDataRepositoryMethodReturnTypeInspection")
-	@Query("SELECT new com.blender.egb.model.Statistic(g.subject, AVG(g.mark)) " +
-			"FROM Gradebook g WHERE g.student.studentId = :studentId GROUP BY g.subject")
+	@Query("SELECT new com.blender.egb.model.Statistic(g.subject.name, AVG(g.mark)) " +
+			"FROM Gradebook g WHERE g.student.studentId = :studentId GROUP BY g.subject.name")
 	List<Statistic> getSubjectsAvgMarksByStudentId(@Param("studentId") long studentId);
 
 	@SuppressWarnings("SpringDataRepositoryMethodReturnTypeInspection")
@@ -37,5 +37,9 @@ public interface GradebookRepository extends JpaRepository<Gradebook, Long> {
 			"FROM Gradebook g WHERE g.student.studentId = :studentId AND g.date BETWEEN :startDate AND :endDate GROUP BY FUNCTION('MONTH', g.date)")
 	List<Statistic> getAvgMarksByIdGroupByMonth(@Param("studentId") long studentId,
 	                                            @Param("startDate") LocalDate startDate, @Param("endDate")LocalDate endDate);
+
+
+	@Query("SELECT g from Gradebook g where g.classCode = :classId AND g.subject.subjectId = :subjectId")
+	List<Gradebook> getGradebookByStudentClassIdAndSubjectId(@Param("classId") long classId, @Param("subjectId") long subjectId);
 
 }

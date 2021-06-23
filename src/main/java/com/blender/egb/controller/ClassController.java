@@ -12,4 +12,5 @@ public class ClassController {
 	public String teacher(Model model) {
 		return "";
 	}
+
 }

@@ -3,13 +3,14 @@ package com.blender.egb.util;
 import com.blender.egb.model.Gradebook;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.OptionalDouble;
 
 public class Utils {
 
 	//Calculating average mark of the student
 	public static double avgMark(List<Gradebook> marks) {
-		OptionalDouble avgMark = marks.stream().mapToDouble(Gradebook::getMark).average();
+		OptionalDouble avgMark = marks.stream().filter(gradebook -> Objects.nonNull(gradebook.getMark())).mapToDouble(Gradebook::getMark).average();
 		return avgMark.orElse(0);
 	}
 

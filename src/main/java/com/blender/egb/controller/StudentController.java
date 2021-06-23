@@ -3,7 +3,6 @@ package com.blender.egb.controller;
 import com.blender.egb.model.Statistic;
 import com.blender.egb.model.Student;
 import com.blender.egb.repository.GradebookRepository;
-import com.blender.egb.repository.StudentClassRepository;
 import com.blender.egb.repository.StudentRepository;
 import com.blender.egb.util.MappingUtils;
 import com.blender.egb.util.Utils;
@@ -22,7 +21,7 @@ import java.util.Map;
 public class StudentController {
 
 	private StudentRepository studentRepository;
-	private StudentClassRepository studentClassRepository;
+	//private StudentClassRepository studentClassRepository;
 	private GradebookRepository gradebookRepository;
 
 	@Autowired
@@ -30,10 +29,10 @@ public class StudentController {
 		this.studentRepository = studentRepository;
 	}
 
-	@Autowired
+	/*@Autowired
 	public void setStudentClassRepository(StudentClassRepository studentClassRepository) {
 		this.studentClassRepository = studentClassRepository;
-	}
+	}*/
 
 	@Autowired
 	public StudentController(GradebookRepository gradebookRepository) {

@@ -1,18 +1,17 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Gradebook</title>
     <meta charset="UTF-8" />
+    <title>Gradebook</title>
 
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <!--               bootstrap                     -->
     <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
     <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
     <!--               spreadsheets                     -->
-    <script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
-    <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
-    <script src="https://jsuites.net/v4/jsuites.js"></script>
-    <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
+    <link href="https://unpkg.com/tabulator-tables@4.9.3/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.9.3/dist/js/tabulator.min.js"></script>
 
 </head>
 
@@ -23,75 +22,29 @@
     </div>
     <div id="page-content-wrapper">
         <div id="page-content">
-                <div class="row">
-                    <div class="col-md-12 main-content main-center">
-                        <div id="spreadsheet"></div>
-                    </div>
+            <div class="row">
+                <div class="col-md-12 main-content main-center">
+                    <label for="date">
+                        <input type="date" id="date" value="" name="trip-start">
+                    </label>
+                    <br>
+                    <br>
+                    <button onclick="insertColumnWithDate()">Add column</button>
+                    <button onclick="saveData()">Save</button>
+                    <br>
+                    <br>
+                    <div id="gradebook"></div>
                 </div>
+            </div>
         </div>
     </div>
 </div>
 
-
-</body>
-<script>
-    var data = [
-        ['Jazz', 'Honda', '2019-02-12', '', true, '$ 2.000,00', '#777700'],
-        ['Civic', 'Honda', '2018-07-11', '', true, '$ 4.000,01', '#007777'],
-    ];
-
-    jspreadsheet(document.getElementById('spreadsheet'), {
-        data:data,
-        contextMenu: function() {
-            return false;
-        },
-        columns: [
-            {
-                type: 'text',
-                title:'Car',
-                width:90
-            },
-            {
-                type: 'dropdown',
-                title:'Make',
-                width:120,
-                source:[
-                    "Alfa Romeo",
-                    "Audi",
-                    "Bmw",
-                    "Chevrolet",
-                    "Chrystler",
-                    // (...)
-                ]
-            },
-            {
-                type: 'calendar',
-                title:'Available',
-                width:120
-            },
-            {
-                type: 'image',
-                title:'Photo',
-                width:120
-            },
-            {
-                type: 'checkbox',
-                title:'Stock',
-                width:80
-            },
-            {
-                type: 'numeric',
-                title:'Price',
-                mask:'$ #.##,00',
-                width:80,
-                decimal:','
-            },
-            {
-                type: 'color',
-                width:80,
-                render:'square',
-            },
-        ]
-    });
+<script type="text/javascript" th:inline="javascript">
+    let dates = /*[[${dates}]]*/ '';
+    let gradebooks = /*[[${gradebooks}]]*/ '';
+    let students = /*[[${students}]]*/ '';
 </script>
+<script type="text/javascript" th:src="@{/js/gradebook.js}"></script>
+</body>
 </html>
