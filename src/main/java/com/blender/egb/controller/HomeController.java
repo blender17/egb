@@ -56,4 +56,16 @@ public class HomeController {
 		return "error";
 	}
 
+	@GetMapping("/")
+	public String rootRedirect(Model model, HttpServletRequest httpServletRequest) {
+
+		if (httpServletRequest.isUserInRole("ADMIN")) {
+			return "redirect:/admin";
+		} else if (httpServletRequest.isUserInRole("TEACHER")) {
+			return "redirect:/home";
+		}
+
+		return "error";
+	}
+
 }

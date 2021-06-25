@@ -21,18 +21,12 @@ import java.util.Map;
 public class StudentController {
 
 	private StudentRepository studentRepository;
-	//private StudentClassRepository studentClassRepository;
 	private GradebookRepository gradebookRepository;
 
 	@Autowired
 	public void setStudentRepository(StudentRepository studentRepository) {
 		this.studentRepository = studentRepository;
 	}
-
-	/*@Autowired
-	public void setStudentClassRepository(StudentClassRepository studentClassRepository) {
-		this.studentClassRepository = studentClassRepository;
-	}*/
 
 	@Autowired
 	public StudentController(GradebookRepository gradebookRepository) {

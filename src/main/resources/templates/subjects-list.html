@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Students list</title>
+    <title>Subjects list</title>
 
     <meta th:name="_csrf" th:content="${_csrf.token}"/>
     <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
@@ -28,33 +28,21 @@
         <div id="page-content">
             <div class="row">
                 <div class="col-md-12 main-content main-center">
-                    <a class="button-style" style="position: absolute; top: 5px; right: 5px" href="/admin/student/add">Add student</a>
-                    <h1>Students list</h1>
+                    <a class="button-style" style="position: absolute; top: 5px; right: 5px" href="/admin/subject/add">Add subject</a>
+                    <h1>Subjects list</h1>
                     <table id="datalist" class="table-style">
                         <thead>
                         <tr class="first-row">
                             <td>Name</td>
-                            <td>Class</td>
-                            <td>Program</td>
-                            <td>Faculty</td>
-                            <td>Birthday</td>
-                            <td>Avg. mark</td>
-                            <td>Attend. %</td>
                             <td></td>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each=" student : ${students}">
-                            <td ><a th:href="@{/student/{id} (id = ${student.studentId})}" th:text="${student.name}"></a></td>
-                            <td th:text="${student.studentClass.classCode}"></td>
-                            <td th:text="${student.studentClass.program}"></td>
-                            <td th:text="${student.studentClass.faculty}"></td>
-                            <td th:text="${student.birthday}"> </td>
-                            <td th:text="${student.avgMark}"></td>
-                            <td th:text="${student.attendancePercentage} + '%'"></td>
-                            <td>
-                                <a th:href="@{/admin/student/{id}/edit (id = ${student.studentId})}">edit</a>
-                                <a href="" th:onclick="'javascript:deleteEntity(\'' + ${student.studentId} + '\',\''+ 'student' + '\');'">delete</a>
+                        <tr th:each=" subject : ${subjects}">
+                            <td th:text="${subject.name}"></td>
+                            <td width="100px">
+                                <a th:href="@{/admin/subject/{id}/edit (id = ${subject.subjectId})}">edit</a>
+                                <a href="" th:onclick="'javascript:deleteEntity(\'' + ${subject.subjectId} + '\',\''+ 'subject' + '\');'">delete</a>
                             </td>
                         </tr>
                         </tbody>

@@ -2,6 +2,7 @@ package com.blender.egb.service;
 
 import com.blender.egb.model.Role;
 import com.blender.egb.model.User;
+import com.blender.egb.repository.RoleRepository;
 import com.blender.egb.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,12 +12,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
 
 	private UserRepository userRepository;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private RoleRepository roleRepository;
 
 	@Autowired
 	public void setUserRepository(UserRepository userRepository) {
@@ -26,6 +29,11 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	public void setBCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+	}
+
+	@Autowired
+	public void setRoleRepository(RoleRepository roleRepository) {
+		this.roleRepository = roleRepository;
 	}
 
 	@Override
@@ -39,12 +47,31 @@ public class UserService implements UserDetailsService {
 		return user;
 	}
 
-	public boolean saveUser(User user, String role) {
+	public List<User> getAllUsersByRole(String roleName) {
+		Role role = roleRepository.findByName(roleName);
+		return userRepository.findAllByRoles(role);
+	}
 
-		User existingUser = userRepository.findByUsername(user.getUsername());
+	public List<User> getAllUsers() {
+		return userRepository.findAll();
+	}
 
-		if (existingUser != null) {
-			return false;
+	public User getUserById(long id) {
+		return userRepository.getById(id);
+	}
+
+	public void deleteUserById(long id) {
+		userRepository.deleteById(id);
+	}
+
+	public boolean saveUser(User user, String role, boolean edit) {
+
+		if (!edit) {
+			User existingUser = userRepository.findByUsername(user.getUsername());
+
+			if (existingUser != null) {
+				return false;
+			}
 		}
 
 		user.setRoles(

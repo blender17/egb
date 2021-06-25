@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Edit student</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <div th:insert="fragments/sidebar :: sidebar"></div>
+    </div>
+    <div id="page-content-wrapper">
+        <div id="page-content">
+            <div class="row">
+                <div class="col-md-12 main-content main-center">
+                    <h1>Add new student</h1>
+                    <form action="#" th:action="@{/admin/student/{id}/edit (id = ${student.studentId})}" th:object="${student}" method="post">
+                        <div class="two-column">
+                            <div class="column">
+                                <label for="firstName">First name:</label>
+                                <input id="firstName" required type="text" th:field="*{firstName}" />
+                                <br>
+                                <label for="middleName">Middle name:</label>
+                                <input id="middleName" required type="text" th:field="*{middleName}" />
+                                <br>
+                                <label for="class">Class:</label>
+                                <select id="class" required th:name="classId">
+                                    <option th:each="class : ${studentClasses}"
+                                            th:value="${class.classId}"
+                                            th:text="${class.classCode}"
+                                            th:selected="${class.classId == student.studentClass.classId}">
+                                    </option>
+                                </select>
+                                <br>
+                                <label for="birthday"> Birthday:</label>
+                                <input id="birthday" th:field="*{birthday}" required type="date">
+                                <br>
+                                <label for="state"> State:</label>
+                                <input id="state" required th:field="*{contacts.state}" type="text">
+                                <br>
+                                <label for="city"> City:</label>
+                                <input id="city" required th:field="*{contacts.city}" type="text">
+                                <br>
+                                <label for="address"> Address:</label>
+                                <input id="address" required th:field="*{contacts.address}" type="text">
+                                <br>
+                                <label for="motherName"> Mother name:</label>
+                                <input id="motherName" required th:field="*{contacts.motherName}" type="text">
+                                <br>
+                                <label for="motherPhone"> Mother phone:</label>
+                                <input id="motherPhone" required th:field="*{contacts.motherPhoneNumber}" type="text">
+                                <br>
+                            </div>
+
+                            <div class="column">
+                                <label for="lastName">Last name:</label>
+                                <input id="lastName" required type="text" th:field="*{lastName}" />
+                                <br>
+                                <label for="gender">Gender:</label>
+                                <select id="gender" required th:field="*{gender}">
+                                    <option th:value="'Male'" th:text="Male"></option>
+                                    <option th:value="'Female'" th:text="Female"></option>
+                                </select>
+                                <br>
+                                <label for="phoneNumber"> Phone number:</label>
+                                <input id="phoneNumber" required th:field="*{contacts.phoneNumber}" type="text">
+                                <br>
+                                <label for="email"> Email:</label>
+                                <input id="email" required th:field="*{contacts.email}" type="text">
+                                <br>
+                                <label for="country"> Country:</label>
+                                <input id="country" required th:field="*{contacts.country}" type="text">
+                                <br>
+                                <label for="zipCode"> ZIP code:</label>
+                                <input id="zipCode" required th:field="*{contacts.zipCode}" type="text">
+                                <br>
+                                <label for="fatherName"> Father name:</label>
+                                <input id="fatherName" required th:field="*{contacts.fatherName}" type="text">
+                                <br>
+                                <label for="fatherPhone"> Father phone:</label>
+                                <input id="fatherPhone" required th:field="*{contacts.fatherPhoneNumber}" type="text">
+                                <br>
+                            </div>
+                        </div>
+                        <input type="submit" value="Save student" style="text-align: center">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

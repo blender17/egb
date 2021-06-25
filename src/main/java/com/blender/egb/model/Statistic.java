@@ -37,9 +37,13 @@ public class Statistic {
 
 	public double getStatistic() {
 		if (avgMark != null) {
+			//Rounding to 1 decimal place
+			avgMark = (double) Math.round(avgMark * 10) / 10;
 			return avgMark;
 		} else {
+			//Calculating percentage of student's attendance
 			double attendancePercentage = ((double) attendCount / lessonsCount) * 100;
+			//Rounding to 1 decimal place
 			attendancePercentage = (double) Math.round(attendancePercentage * 10) / 10;
 			return attendancePercentage;
 		}

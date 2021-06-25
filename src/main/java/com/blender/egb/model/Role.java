@@ -2,6 +2,7 @@ package com.blender.egb.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Entity;
@@ -12,11 +13,13 @@ import java.util.Set;
 
 @Data
 @NoArgsConstructor
+@ToString(onlyExplicitlyIncluded = true)
 @Entity
 public class Role implements GrantedAuthority {
 
 	@Id
 	private Long id;
+	@ToString.Include
 	private String name;
 	@Transient
 	@ManyToMany(mappedBy = "roles")

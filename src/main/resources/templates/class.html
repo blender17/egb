@@ -1,10 +1,20 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title th:text="${classCode}"></title>
     <meta charset="UTF-8" />
+    <title th:text="${classCode}"></title>
+
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+
     <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!--  datatables  -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
 </head>
 
 <body>
@@ -14,11 +24,41 @@
     </div>
     <div id="page-content-wrapper">
         <div id="page-content">
-                <div class="row">
-                    <div class="col-md-12 main-content main-center">
+            <div class="row">
+                <div class="col-md-12 main-content main-center">
+                    <h1>Students list</h1>
+                    <div sec:authorize="hasRole('ADMIN')">
+                        <a th:onclick="'javascript:deleteEntity(\'' + ${classId} + '\',\''+ 'class' + '\');'"
+                           class="button-style" style="position: absolute; top: 5px; right: 240px; background-color: #D72729;">Delete class</a>
+
+                        <a th:href="@{/admin/class/{id}/edit (id=${classId})}" class="button-style" style="position: absolute; top: 5px; right: 130px;">Edit class</a>
                         <a class="button-style" style="position: absolute; top: 5px; right: 5px" href="/student/add">Add student</a>
-                        <h1>Students list</h1>
-                        <div th:insert="fragments/students-list-fragment"></div>
+                    </div>
+                    <table  id="student-list" class="table-style">
+                        <thead>
+                        <tr class="first-row">
+                            <td>Name</td>
+                            <td>Class</td>
+                            <td>Program</td>
+                            <td>Faculty</td>
+                            <td>Birthday</td>
+                            <td>Avg. mark</td>
+                            <td>Attend. %</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each=" student : ${students}">
+                            <td ><a th:href="@{/student/{id} (id = ${student.studentId})}" th:text="${student.name}"></a></td>
+                            <td contenteditable='true' th:text="${student.studentClass.classCode}"></td>
+                            <td th:text="${student.studentClass.program}"></td>
+                            <td th:text="${student.studentClass.faculty}"></td>
+                            <td th:text="${student.birthday}"> </td>
+                            <td th:text="${student.avgMark}"></td>
+                            <td th:text="${student.attendancePercentage} + '%'"></td>
+                        </tr>
+                        </tbody>
+                        <hr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -26,5 +66,13 @@
 </div>
 
 <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        $('#student-list').DataTable();
+    } );
+    document.getElementById("student-list").addEventListener("input", inputEvt => {
+        console.log("input event fired");
+    }, false);
+</script>
 </body>
 </html>

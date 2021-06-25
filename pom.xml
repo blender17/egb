@@ -11,7 +11,7 @@
     </parent>
     <groupId>com.blender</groupId>
     <artifactId>EGB</artifactId>
-    <version>0.3</version>
+    <version>0.6</version>
     <name>EGB</name>
     <description>Electronic grade book</description>
     <properties>

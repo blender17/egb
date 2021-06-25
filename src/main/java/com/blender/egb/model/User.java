@@ -29,6 +29,9 @@ public class User implements UserDetails {
 	private String email;
 	private String address;
 
+	@Transient
+	private String name;
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthday;
 
@@ -41,6 +44,15 @@ public class User implements UserDetails {
 	private String passwordConfirm;
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Role> roles;
+
+	public String getName() {
+		if (!(middleName == null) &&  !middleName.equals("")) {
+			name = firstName + " " + middleName.charAt(0) + ". " + lastName;
+		} else {
+			name = firstName + " " + lastName;
+		}
+		return name;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

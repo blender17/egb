@@ -6,7 +6,6 @@ let table = new Tabulator("#gradebook", {
     minHeight: 400,
     layout: 'fitDataFill',
     headerHozAlign:"center",
-    cellHozAlign:"center",
     placeholder: "No data available",
     columns:[
         {title:"Name", field:"name", width: 200,},
@@ -18,7 +17,7 @@ for (let i = 0; i < students.length; i++) {
 }
 
 for (let i = 0; i < dates.length; i++) {
-    table.addColumn({title:dates[i], field:dates[i], editor:"input"}, false);
+    table.addColumn({title:dates[i], field:dates[i], editor:"input", align:"center"}, false);
 }
 
 for (let i = 0; i < table.getDataCount(); i++) {
@@ -53,12 +52,19 @@ async function saveData() {
         }
     }
 
-    let xhr = new XMLHttpRequest();
     const url = window.location.href;
 
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-Type", "application/json");
+    const token = $("meta[name='_csrf']").attr("content");
+    const header = $("meta[name='_csrf_header']").attr("content");
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
 
-    data = JSON.stringify(data);
-    xhr.send(data);
+    $.ajax({
+        url: url,
+        type: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(data)
+    });
 }

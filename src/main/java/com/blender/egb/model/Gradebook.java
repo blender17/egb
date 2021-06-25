@@ -16,7 +16,7 @@ public class Gradebook {
 	private Integer mark;
 	private Boolean attend;
 	private LocalDate date;
-	private Long classCode;
+	private Long classId;
 	private String topic;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "student_id", foreignKey = @ForeignKey(name = "FK_student"))

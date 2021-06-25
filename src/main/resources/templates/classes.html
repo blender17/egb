@@ -1,10 +1,21 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Students Classes</title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
+    <title>Students Classes</title>
+
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+
     <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
+
+    <!--  datatables  -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
 </head>
 
 <body>
@@ -14,17 +25,41 @@
     </div>
     <div id="page-content-wrapper">
         <div id="page-content">
-                <div class="row">
-                    <div class="col-md-12 main-content main-center">
-                        <a class="button-style" style="position: absolute; top: 5px; right: 5px" href="/class/add">Add Class</a>
-                        <h1>Classes list</h1>
-                        <div th:insert="fragments/classes-list-fragment"></div>
-                    </div>
+            <div class="row">
+                <div class="col-md-12 main-content main-center">
+                    <a class="button-style" style="position: absolute; top: 5px; right: 5px" href="/class/add">Add Class</a>
+                    <h1>Classes list</h1>
+                    <table id="datalist"  class="table-style">
+                        <thead>
+                        <tr class="first-row">
+                            <td>Class code</td>
+                            <td>Program</td>
+                            <td>Faculty</td>
+                            <td># of students</td>
+                            <td></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each=" studentClass : ${studentClasses}">
+                            <td ><a th:href="@{/class/{id}(id=${studentClass.classId})}" th:text="${studentClass.classCode}"></a> </td>
+                            <td th:text="${studentClass.program}"> </td>
+                            <td th:text="${studentClass.faculty}"> </td>
+                            <td th:text="${studentClass.students.size()}"></td>
+                            <td>
+                                <a th:href="@{/admin/class/{id}/edit (id = ${studentClass.classId})}">edit</a>
+                                <a href="" th:onclick="'javascript:deleteEntity(\'' + ${studentClass.classId} + '\',\''+ 'class' + '\');'">delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                        <hr>
+                    </table>
                 </div>
+            </div>
         </div>
     </div>
 </div>
 
 <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+<script th:inline="javascript" th:src="@{/js/script.js}"></script>
 </body>
 </html>

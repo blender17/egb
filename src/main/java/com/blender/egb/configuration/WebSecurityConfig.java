@@ -32,7 +32,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http
-				.csrf().disable()
 				.authorizeRequests()
 					.antMatchers("/login", "/registration").permitAll()
 					.antMatchers("/admin/**").hasRole("ADMIN")
@@ -55,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		web
 				.ignoring()
-				.antMatchers("/css/**");
+				.antMatchers("/css/**", "/error");
 	}
 
 	@Override

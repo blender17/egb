@@ -1,6 +1,5 @@
 package com.blender.egb.model;
 
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -61,7 +60,7 @@ public class Student implements Serializable {
 	private List<Gradebook> gradebooks;
 
 	public String getName() {
-		if (!(middleName == null)) {
+		if (!(middleName == null) &&  !middleName.equals("")) {
 			name = firstName + " " + middleName.charAt(0) + ". " + lastName;
 		} else {
 			name = firstName + " " + lastName;

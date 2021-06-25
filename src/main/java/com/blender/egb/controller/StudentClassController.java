@@ -34,6 +34,7 @@ public class StudentClassController {
 			List<StudentDTO> studentsDTO = students.stream().map(MappingUtils::mapToStudentDTO).collect(Collectors.toList());
 			model.addAttribute("students", studentsDTO);
 			model.addAttribute("classCode", studentClass.get().getClassCode());
+			model.addAttribute("classId", studentClass.get().getClassId());
 		}
 		return "class";
 	}

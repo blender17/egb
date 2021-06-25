@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class ClassesSubjects implements Serializable {
 
 	@EmbeddedId
-	private StudentClassKey studentClassKey;
+	private StudentClassKey studentClassKey = new StudentClassKey();
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("userId")

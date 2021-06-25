@@ -37,7 +37,7 @@ public class RegistrationController {
 			return "registration";
 		}
 
-		if (!userService.saveUser(user, "USER")){
+		if (!userService.saveUser(user, "USER", false)){
 			model.addAttribute("usernameError", "Username exists");
 			return "registration";
 		}

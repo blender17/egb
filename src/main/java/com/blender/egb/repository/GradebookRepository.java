@@ -39,7 +39,7 @@ public interface GradebookRepository extends JpaRepository<Gradebook, Long> {
 	                                            @Param("startDate") LocalDate startDate, @Param("endDate")LocalDate endDate);
 
 
-	@Query("SELECT g from Gradebook g where g.classCode = :classId AND g.subject.subjectId = :subjectId")
+	@Query("SELECT g from Gradebook g where g.classId = :classId AND g.subject.subjectId = :subjectId")
 	List<Gradebook> getGradebookByStudentClassIdAndSubjectId(@Param("classId") long classId, @Param("subjectId") long subjectId);
 
 }

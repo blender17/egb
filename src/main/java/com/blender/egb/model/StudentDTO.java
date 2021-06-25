@@ -8,8 +8,7 @@ import java.time.LocalDate;
 public class StudentDTO {
 
 	private Long studentId;
-	private String firstName;
-	private String lastName;
+	private String name;
 	private String gender;
 	private LocalDate birthday;
 	private StudentClass studentClass;

@@ -30,8 +30,7 @@ public class MappingUtils {
 	public static StudentDTO mapToStudentDTO(Student student) {
 		StudentDTO studentDTO = new StudentDTO();
 		studentDTO.setStudentId(student.getStudentId());
-		studentDTO.setFirstName(student.getFirstName());
-		studentDTO.setLastName(student.getLastName());
+		studentDTO.setName(student.getName());
 		studentDTO.setGender(student.getGender());
 		studentDTO.setBirthday(student.getBirthday());
 		studentDTO.setStudentClass(student.getStudentClass());
@@ -57,28 +56,33 @@ public class MappingUtils {
 	}
 
 	public static List<Gradebook> mapGradebooksDTOtoEntityList(List<GradebookDTO> gradebooksDTO, List<Gradebook> gradebooks) {
+		Iterator<GradebookDTO> iterator;
+		//Saving existing values
 		for (int i = 0; i < gradebooks.size(); i++) {
-			for (int j = 0; j < gradebooksDTO.size(); j++) {
-				if (gradebooks.get(i).getStudent().getName().equals(gradebooksDTO.get(j).getName())
-						&& gradebooks.get(i).getDate().toString().equals(gradebooksDTO.get(j).getName())) {
-					switch (gradebooksDTO.get(j).getValue()) {
-						case "":
+			iterator = gradebooksDTO.listIterator();
+			while (iterator.hasNext()) {
+				GradebookDTO gradebookDTO = iterator.next();
+				if (gradebooks.get(i).getStudent().getName().equals(gradebookDTO.getName())
+						&& gradebooks.get(i).getDate().equals(gradebookDTO.getDate())) {
+					switch (gradebookDTO.getValue()) {
+						case "" -> {
 							gradebooks.get(i).setAttend(true);
-							gradebooksDTO.remove(j);
-							break;
-						case "X":
+							iterator.remove();
+						}
+						case "X" -> {
 							gradebooks.get(i).setAttend(false);
-							gradebooksDTO.remove(j);
-							break;
-						default:
+							iterator.remove();
+						}
+						default -> {
 							gradebooks.get(i).setAttend(true);
-							gradebooks.get(i).setMark(Integer.parseInt(gradebooksDTO.get(j).getValue()));
-							gradebooksDTO.remove(j);
-							break;
+							gradebooks.get(i).setMark(Integer.parseInt(gradebookDTO.getValue()));
+							iterator.remove();
+						}
 					}
 				}
 			}
 		}
+		//Saving new data
 		if (!gradebooksDTO.isEmpty()) {
 			for (int i = 0; i <gradebooksDTO.size(); i++) {
 				Gradebook gradebook = new Gradebook();
@@ -89,19 +93,45 @@ public class MappingUtils {
 					gradebook.setStudent(tempGradebook.getStudent());
 					gradebook.setDate(gradebooksDTO.get(i).getDate());
 					gradebook.setSubject(tempGradebook.getSubject());
-					gradebook.setClassCode(tempGradebook.getClassCode());
+					gradebook.setClassId(tempGradebook.getClassId());
 					switch (gradebooksDTO.get(i).getValue()) {
-						case "":
-							gradebook.setAttend(true);
-							break;
-						case "X":
-							gradebook.setAttend(false);
-							break;
-						default:
+						case "" -> gradebook.setAttend(true);
+						case "X" -> gradebook.setAttend(false);
+						default -> {
 							gradebook.setMark(Integer.parseInt(gradebooksDTO.get(i).getValue()));
 							gradebook.setAttend(true);
-							break;
+						}
 					}
+					gradebooks.add(gradebook);
+				}
+			}
+		}
+		return gradebooks;
+	}
+
+	public static List<Gradebook> mapGradebooksDTOtoEntityList(List<GradebookDTO> gradebooksDTO, List<Student> students, Subject subject) {
+		List<Gradebook> gradebooks = new ArrayList<>();
+
+		for (Student student : students) {
+			for (GradebookDTO gradebookDTO : gradebooksDTO) {
+
+				if (gradebookDTO.getName().equals(student.getName())) {
+
+					Gradebook gradebook = new Gradebook();
+					gradebook.setStudent(student);
+					gradebook.setSubject(subject);
+					gradebook.setClassId(student.getStudentClass().getClassId());
+					gradebook.setDate(gradebook.getDate());
+
+					switch (gradebookDTO.getValue()) {
+						case "" -> gradebook.setAttend(true);
+						case "X" -> gradebook.setAttend(false);
+						default -> {
+							gradebook.setMark(Integer.parseInt(gradebookDTO.getValue()));
+							gradebook.setAttend(true);
+						}
+					}
+					gradebooks.add(gradebook);
 				}
 			}
 		}

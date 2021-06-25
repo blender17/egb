@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
-  <title>Gradebook</title>
+  <title>Admin page</title>
 
   <link rel="stylesheet" th:href="@{/css/style.css}">
   <!--               bootstrap                     -->
@@ -22,17 +22,28 @@
         <div class="col-md-12 main-content main-center">
           <div>
             <p>Users options</p>
-            <a th:href="@{/admin/user/add}">Add user or teacher</a>
-            <a th:href="@{/admin/student/add}">Add student</a>
+            <a th:href="@{/admin/user/add}">Add user</a>
             <a th:href="@{/admin/users}">All users list</a>
+          </div>
+          <div>
+            <p>Teacher options</p>
+            <a th:href="@{/admin/user/add}">Add teacher</a>
             <a th:href="@{/admin/teachers}">Teachers list</a>
+<!--            <a th:href="@{/admin/teachers/subjects}">Teacher's subjects</a>-->
+            <a th:href="@{/admin/teacher/bind}">Bind teacher to class</a>
+          </div>
+          <div>
+            <p>Student options</p>
+            <a th:href="@{/admin/student/add}">Add student</a>
             <a th:href="@{/admin/students}">Students list</a>
           </div>
           <div>
             <p>Classes options</p>
-          <a th:href="@{/admin/class/add}">Add class</a>
-          <a th:href="@{/admin/classes}">Classes list</a>
-          <a th:href="@{/admin/bind-teacher}">Bind teacher to class</a>
+            <a th:href="@{/admin/class/add}">Add class</a>
+            <a th:href="@{/admin/classes}">Classes list</a>
+            <a th:href="@{/admin/subject/add}">Add subject</a>
+            <a th:href="@{/admin/subjects}">Subjects list</a>
+            <a th:href="@{/admin/classes/subjects}">Classes and subjects</a>
           </div>
         </div>
       </div>

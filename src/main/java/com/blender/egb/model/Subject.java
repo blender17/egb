@@ -16,9 +16,9 @@ public class Subject {
 	@Column(updatable = false, nullable = false)
 	private Long subjectId;
 	private String name;
-	@OneToMany(mappedBy = "subject", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private List<ClassesSubjects> classesSubjects;
 
-	@OneToMany(mappedBy = "subject", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private List<Gradebook> gradebooks;
 }

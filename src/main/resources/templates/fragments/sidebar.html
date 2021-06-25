@@ -7,10 +7,6 @@
   <img th:src="@{/images/book-icon.png}" style="margin-right: 5px; margin-top: 5px" width="40" height="32" alt="">
   <span class="fs-4">EGB</span>
   </a>
-  <a sec:authorize="hasRole('USER')" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-  <img th:src="@{/images/book-icon.png}" style="margin-right: 5px; margin-top: 5px" width="40" height="32" alt="">
-  <span class="fs-4">EGB</span>
-  </a>
   <hr>
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item">
@@ -21,24 +17,6 @@
       <a sec:authorize="hasRole('TEACHER')" href="/home" class="nav-link active" aria-current="page">
         <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
         Home
-      </a>
-    </li>
-    <li>
-      <a href="/gradebook" class="nav-link link-dark">
-        <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-        Gradebook
-      </a>
-    </li>
-    <li>
-      <a href="/attendance" class="nav-link link-dark">
-        <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-        Attendance
-      </a>
-    </li>
-    <li>
-      <a href="/classes" class="nav-link link-dark">
-        <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-        Classes
       </a>
     </li>
   </ul>
