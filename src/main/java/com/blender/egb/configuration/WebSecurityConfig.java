@@ -32,10 +32,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http
-				/*.requiresChannel()
-				.requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-				.requiresSecure()
-				.and()*/
 				.authorizeRequests()
 					.antMatchers("/login", "/registration").permitAll()
 					.antMatchers("/admin/**").hasRole("ADMIN")
