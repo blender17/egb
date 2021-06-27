@@ -10,6 +10,7 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 @Data
@@ -34,6 +35,9 @@ public class Student implements Serializable {
 
 	@Transient
 	private String name;
+
+	@Transient
+	private Integer age;
 
 	@Basic(fetch = FetchType.LAZY)
 	private String status;
@@ -66,5 +70,9 @@ public class Student implements Serializable {
 			name = firstName + " " + lastName;
 		}
 		return name;
+	}
+
+	public Integer getAge() {
+		return Period.between(birthday, LocalDate.now()).getYears();
 	}
 }

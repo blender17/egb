@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title></title>
+
+  <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+<div id="wrapper">
+  <div id="sidebar-wrapper">
+    <div th:insert="fragments/sidebar :: sidebar"></div>
+  </div>
+  <div id="page-content-wrapper">
+    <div id="page-content">
+      <div class="row">
+        <div class="col-md-12 main-content main-center">
+          <p th:if="${user.name != null}" th:text="${user.name}"></p>
+          <p th:text="'Username: ' + ${user.username}"></p>
+          <p th:if="${user.birthday != null}" th:text="'Birthday: ' + ${user.birthday} + ' (' + ${user.getAge()} + ' years)' "></p>
+          <p th:if="${user.gender != null}" th:text="'Gender: ' + ${user.gender}"></p>
+          <p th:if="${user.position != null}" th:text="'Position: ' + ${user.position}"></p>
+          <p th:if="${user.academicDegree != null}" th:text="'Academic degree: ' + ${user.academicDegree}"></p>
+          <p th:if="${user.email != null}" th:text="'Email: ' + ${user.email}"></p>
+          <p th:if="${user.phoneNumber != null}" th:text="'Phone number: ' + ${user.phoneNumber}"></p>
+          <p th:if="${user.address != null}" th:text="'Address: ' + ${user.address}"></p>
+          <th:block th:if="${studentClasses != null}" th:each="studClass : ${studentClasses}">
+            <div>
+              <a th:text="${studClass.classCode}" th:href="@{/class/{id} (id = ${studClass.classId})}"></a>
+              <table>
+                <tr th:each="mapEntry : ${studClass.subjects}">
+                  <td>
+                    <a th:text="${mapEntry.value}" th:href="@{/gradebook/{class}/{subject} (class = ${studClass.classId}, subject = ${mapEntry.key})}"></a>
+                  </td>
+                <tr>
+              </table>
+            </div>
+          </th:block>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

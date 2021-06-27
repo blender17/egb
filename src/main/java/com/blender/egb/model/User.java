@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Collection;
 import java.util.Set;
 
@@ -32,6 +33,9 @@ public class User implements UserDetails {
 	@Transient
 	private String name;
 
+	@Transient
+	private Integer age;
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthday;
 
@@ -52,6 +56,10 @@ public class User implements UserDetails {
 			name = firstName + " " + lastName;
 		}
 		return name;
+	}
+
+	public Integer getAge() {
+		return Period.between(birthday, LocalDate.now()).getYears();
 	}
 
 	@Override
