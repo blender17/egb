@@ -41,13 +41,10 @@
                     </div>
                     <div class="content-card"><img th:src="${student.photoUrl}" alt="" class="photo"></div>
 
-                    <h1 th:if="${student.middleName != null}" th:text="${student.firstName} + ' ' + ${student.middleName.substring(0, 1)}
-                    + '. ' + ${student.lastName}" style="margin-top: 20px; margin-left: 260px"></h1>
-                    <h1 th:unless="${student.middleName != null}" th:text="${student.firstName} + ' ' + ${student.lastName}"
-                        style="margin-top: 20px; margin-left: 260px"></h1>
+                    <h1 th:text="${student.name}" style="margin-top: 20px; margin-left: 260px"></h1>
 
                     <div class="content-card">
-                        <p th:text="'Birthday: ' + ${student.birthday} + ' (' + ${age} + ' years)' "></p>
+                        <p th:text="'Birthday: ' + ${student.birthday} + ' (' + ${student.age} + ' years)' "></p>
                         <p th:text="'Gender: ' + ${student.gender}"></p>
                         <p th:text="'Phone number: ' + ${student.contacts.phoneNumber}"></p>
                         <p>Email: <a th:href="'mailto:' + ${student.contacts.email}" th:text="${student.contacts.email}"></a></p>
