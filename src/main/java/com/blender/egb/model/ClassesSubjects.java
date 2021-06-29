@@ -9,17 +9,22 @@ import java.io.Serializable;
 @Entity
 public class ClassesSubjects implements Serializable {
 
-	@EmbeddedId
-	private StudentClassKey studentClassKey = new StudentClassKey();
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
+//	@EmbeddedId
+//	private StudentClassKey studentClassKey = new StudentClassKey();
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("userId")
+//	@MapsId("userId")
 	private User userId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("studentClassId")
+//	@MapsId("studentClassId")
 	private StudentClass studentClassId;
 
 	@ManyToOne
+//	@MapsId("subjectId")
 	private Subject subject;
 }
