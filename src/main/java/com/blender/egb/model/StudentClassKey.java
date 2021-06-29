@@ -2,7 +2,7 @@ package com.blender.egb.model;
 
 import lombok.Data;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
@@ -11,5 +11,6 @@ public class StudentClassKey implements Serializable {
 
 	private Long userId;
 	private Long studentClassId;
+	private Long subjectId;
 
 }
