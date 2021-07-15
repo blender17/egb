@@ -1,0 +1,12 @@
+<div th:fragment="header" id="header">
+  <a href="/" style="text-decoration: none; margin-left: 10vw;">
+    <img th:src="@{/images/book-icon.svg}" style="vertical-align: middle; margin-top: 7px" width="50" height="50" alt="">
+    <span style="vertical-align: text-top; color: #FFFFFF; font-size: 24px; font-family: Prompt;" >EGB</span>
+  </a>
+  <div id="header-right">
+    <span style="color: #FFFFFF; font-size: 18px; margin-right: 30px; display: inline-block; line-height: 0">Welcome, [[${#httpServletRequest.remoteUser}]]</span>
+    <form id="logout" th:action="@{/logout}" method="post" style="float: right">
+      <input id="image-button-submit" type="submit" value=""/>
+    </form>
+  </div>
+</div>

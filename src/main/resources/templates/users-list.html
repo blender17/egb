@@ -8,10 +8,7 @@
     <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
 
     <link rel="stylesheet" th:href="@{/css/style.css}">
-
-    <!--  bootstrap  -->
-    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
-    <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Prompt&display=swap" rel="stylesheet">
 
     <!--  datatables  -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
@@ -20,51 +17,41 @@
 </head>
 
 <body>
-<div id="wrapper">
-    <div id="sidebar-wrapper">
-        <div th:insert="fragments/sidebar :: sidebar"></div>
-    </div>
-    <div id="page-content-wrapper">
-        <div id="page-content">
-            <div class="row">
-                <div class="col-md-12 main-content main-center">
-                    <a class="button-style" style="position: absolute; top: 5px; right: 5px" href="/admin/user/add">Add user</a>
-                    <h1 th:text="${title}"></h1>
-                    <table id="datalist" class="table-style">
-                        <thead>
-                        <tr class="first-row">
-                            <td>Username</td>
-                            <td>Name</td>
-                            <td>Academic degree</td>
-                            <td>Email</td>
-                            <td>Birthday</td>
-                            <td>Gender</td>
-                            <td>Roles</td>
-                            <td></td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each=" user : ${users}">
-                            <td><a th:href="@{/user/{id} (id = ${user.userId})}" th:text="${user.username}"></a></td>
-                            <td th:text="${user.name}"></td>
-                            <td th:text="${user.academicDegree}"></td>
-                            <td th:text="${user.email}"></td>
-                            <td th:text="${user.birthday}"></td>
-                            <td th:text="${user.gender}"></td>
-                            <td th:text="${user.roles}"></td>
-                            <td>
-                                <a th:href="@{/admin/user/{id}/edit (id = ${user.userId})}">edit</a>
-                                <a href="" th:onclick="'javascript:deleteEntity(\'' + ${user.userId} + '\',\''+ 'user' + '\');'">delete</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                        <hr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+<th:block th:insert="fragments/header :: header"/>
+<div class="wrapper">
+    <a class="link-button" style="margin-top: 50px; float: right; margin-right: 10vw" href="/admin/user/add">Add user</a>
+    <h1 th:text="${title}"></h1>
+    <table id="datalist">
+        <thead>
+        <tr>
+            <td>Username</td>
+            <td>Name</td>
+            <td>Academic degree</td>
+            <td>Email</td>
+            <td>Birthday</td>
+            <td>Gender</td>
+            <td>Roles</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each=" user : ${users}">
+            <td><a th:href="@{/user/{id} (id = ${user.userId})}" th:text="${user.username}"></a></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.academicDegree}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.birthday}"></td>
+            <td th:text="${user.gender}"></td>
+            <td th:text="${user.roles}"></td>
+            <td>
+                <a th:href="@{/admin/user/{id}/edit (id = ${user.userId})}">edit</a>
+                <a href="" th:onclick="'javascript:deleteEntity(\'' + ${user.userId} + '\',\''+ 'user' + '\');'">delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+<th:block th:insert="fragments/footer :: footer"/>
 <script th:inline="javascript" th:src="@{/js/script.js}"></script>
 </body>
 </html>

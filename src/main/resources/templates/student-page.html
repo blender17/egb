@@ -5,17 +5,12 @@
 <head>
     <meta charset="UTF-8"/>
 
-    <title th:if="${student.middleName != null}" th:text="${student.firstName} + ' ' + ${student.middleName.substring(0, 1)} + '. ' + ${student.lastName}"></title>
-    <title th:unless="${student.middleName != null}" th:text="${student.firstName} + ' ' + ' ' + ${student.lastName}"></title>
-
+    <title th:text="${student.name}"></title>
     <meta th:name="_csrf" th:content="${_csrf.token}"/>
     <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
 
     <link rel="stylesheet" th:href="@{/css/style.css}">
-
-    <!--               Bootstrap                     -->
-    <script type="text/javascript" src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Prompt&display=swap" rel="stylesheet">
 
     <!--               Google charts                     -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -25,97 +20,156 @@
 </head>
 
 <body>
-<div id="wrapper">
-    <div id="sidebar-wrapper">
-        <div th:insert="fragments/sidebar :: sidebar"></div>
+<th:block th:insert="fragments/header :: header"/>
+<div class="wrapper">
+    <div sec:authorize="hasRole('ADMIN')">
+        <a th:href="@{/admin/student/{id}/edit (id=${student.studentId})}" class="link-button" style="margin-top: 50px; float: right; margin-right: 10vw">Edit student</a>
+        <a th:onclick="'javascript:deleteEntity(\'' + ${student.studentId} + '\',\''+ 'student' + '\');'"
+           class="link-button" style="margin-top: 50px; float: right; margin-right: 20px">Delete student</a>
     </div>
-    <div id="page-content-wrapper">
-        <div id="page-content">
-            <div class="row">
-                <div class="col-md-12 main-content">
-                    <div sec:authorize="hasRole('ADMIN')">
-                        <a th:onclick="'javascript:deleteEntity(\'' + ${student.studentId} + '\',\''+ 'student' + '\');'"
-                           class="button-style" style="position: absolute; top: 5px; right: 130px; background-color: #D72729;">Delete student</a>
 
-                        <a th:href="@{/admin/student/{id}/edit (id=${student.studentId})}" class="button-style" style="position: absolute; top: 5px; right: 5px;">Edit student</a>
-                    </div>
-                    <div class="content-card"><img th:src="${student.photoUrl}" alt="" class="photo"></div>
+    <h1 th:text="${student.name}"></h1>
 
-                    <h1 th:text="${student.name}" style="margin-top: 20px; margin-left: 260px"></h1>
+    <div>
+        <div style="float: left;">
+            <span style="font-weight: 500;">Birthday:</span>
+            <span th:text="${student.birthday} + ' (' + ${student.age} + ' years)' "></span>
+            <br>
+            <span style="font-weight: 500">Email:</span>
+            <a th:href="'mailto:' + ${student.contacts.email}" th:text="${student.contacts.email}"></a>
+        </div>
 
-                    <div class="content-card">
-                        <p th:text="'Birthday: ' + ${student.birthday} + ' (' + ${student.age} + ' years)' "></p>
-                        <p th:text="'Gender: ' + ${student.gender}"></p>
-                        <p th:text="'Phone number: ' + ${student.contacts.phoneNumber}"></p>
-                        <p>Email: <a th:href="'mailto:' + ${student.contacts.email}" th:text="${student.contacts.email}"></a></p>
-                    </div>
+        <div style="float: left; margin-left: 30px">
+            <span style="font-weight: 500">Gender:</span>
+            <span th:text="${student.gender}"></span>
+            <br>
+            <span style="font-weight: 500">Phone:</span>
+            <span th:text="${student.contacts.phoneNumber}"></span>
+        </div>
+    </div>
 
-                    <div class="content-card">
-                        <div id="chart_line"></div>
-                        <div id="chart_col"></div>
-                    </div>
+    <div style="clear: both;">
+        <div style="float: left">
+            <h2>Faculty information</h2>
+            <div style="float: left;">
+                <span style="font-weight: 500">Class:</span>
+                <span th:text="${student.studentClass.classCode}"></span>
+                <br>
+                <span style="font-weight: 500">Faculty:</span>
+                <span th:text="${student.studentClass.faculty}"></span>
+                <br>
+                <span style="font-weight: 500">Average mark:</span>
+                <span th:text="${avgMark}"></span>
+            </div>
 
-                    <div class="content-card">
-                        <table class="table-style">
-                            <thead>
-                            <tr class="first-row">
-                                <td>Subject</td>
-                                <td>Average mark</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each=" subjectsMark : ${avgMarksBySubject}">
-                                <td th:text="${subjectsMark.subject}"> </td>
-                                <!--                                <td th:text="${subjectsMark.avgMark}" > </td>-->
-                                <td th:text="${#numbers.formatDecimal(subjectsMark.avgMark, 0, 1, 'POINT')}" > </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <table class="table-style" style="margin-top: 20px">
-                            <thead>
-                            <tr class="first-row">
-                                <td>Subject</td>
-                                <td>Attendance</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each=" subjectsAttendance : ${attendanceBySubject}">
-                                <td th:text="${subjectsAttendance.subject}"> </td>
-                                <td th:text="${subjectsAttendance.getStatistic() + '%'}"> </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div style="float: left; margin-left: 30px">
+                <span style="font-weight: 500">Program:</span>
+                <span th:text="${student.studentClass.program}"></span>
+                <br>
+                <span style="font-weight: 500">Attendance:</span>
+                <span th:text="${attendance} + '%'"></span>
+            </div>
+        </div>
 
-                    <div class="addInfo">
-                        <div>
-                            <p th:text="'Faculty: ' + ${student.studentClass.faculty}"></p>
-                            <p th:text="'Program: ' + ${student.studentClass.program}"></p>
-                            <p th:text="'Class: ' + ${student.studentClass.classCode}"></p>
-                            <p th:text="'Average mark: ' +${avgMark}"></p>
-                            <p th:text="'Attendance percentage: ' + ${attendance} + '%'"></p>
-                        </div>
-                        <hr>
-                        <div style="clear: both">
-                            <p th:text="'Country: ' + ${student.contacts.country}"></p>
-                            <p th:text="'State: ' + ${student.contacts.state}"></p>
-                            <p th:text="'Address: ' + ${student.contacts.address}"></p>
-                            <p th:text="'ZIP-code: ' +${student.contacts.zipCode}"></p>
-                        </div>
-                        <hr>
-                        <div style="clear: both">
-                            <p th:text="'Father name: ' + ${student.contacts.fatherName}"></p>
-                            <p th:text="'Father phone number: ' + ${student.contacts.fatherPhoneNumber}"></p>
-                            <p th:text="'Mother name: ' + ${student.contacts.motherName}"></p>
-                            <p th:text="'Mother phone number: ' + ${student.contacts.motherPhoneNumber}"></p>
-                        </div>
-                    </div>
-                </div>
+        <div style="float: left; margin-left: 30px">
+            <h2>Personal information</h2>
+            <div style="float: left;">
+                <span style="font-weight: 500">Country:</span>
+                <span th:text="${student.contacts.country}"></span>
+                <br>
+                <span style="font-weight: 500">State:</span>
+                <span th:text="${student.contacts.state}"></span>
+                <br>
+                <span style="font-weight: 500">Address:</span>
+                <span th:text="${student.contacts.address}"></span>
+                <br>
+                <span style="font-weight: 500">ZIP-code:</span>
+                <span th:text="${student.contacts.zipCode}"></span>
+            </div>
+
+            <div style="float: left; margin-left: 30px">
+                <span style="font-weight: 500">Father's name:</span>
+                <span th:text="${student.contacts.fatherName}"></span>
+                <br>
+                <span style="font-weight: 500">Father's phone:</span>
+                <span th:text="${student.contacts.fatherPhoneNumber}"></span>
+                <br>
+                <span style="font-weight: 500">Mother's name:</span>
+                <span th:text="${student.contacts.motherName}"></span>
+                <br>
+                <span style="font-weight: 500">Mother's phone:</span>
+                <span th:text="${student.contacts.motherPhoneNumber}"></span>
             </div>
         </div>
     </div>
+
+    <div style="width: 445px; float: left; clear: both">
+        <table class="table-card" style="width: 100%">
+            <thead>
+            <tr>
+                <td>Avg. mark by subject</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="padding: 0">
+                    <div id="chart_line"></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="subject-card" style="width: 100%; margin-top: 0">
+            <thead>
+            <tr>
+                <td>Subject</td>
+                <td>Average mark</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each=" subjectsMark : ${avgMarksBySubject}">
+                <td th:text="${subjectsMark.subject}"> </td>
+                <!--<td th:text="${subjectsMark.avgMark}" style="text-align: center"> </td>-->
+                <td th:text="${#numbers.formatDecimal(subjectsMark.avgMark, 0, 1, 'POINT')}" style="text-align: center"> </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="width: 445px; float: left; margin-left: 220px">
+        <table class="table-card" style="width: 100%">
+            <thead>
+            <tr>
+                <td>Attendance by month</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="padding: 0">
+                    <div id="chart_col"></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="subject-card" style="width: 100%; margin-top: 0">
+            <thead>
+            <tr>
+                <td>Subject</td>
+                <td>Attendance</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each=" subjectsAttendance : ${attendanceBySubject}">
+                <td th:text="${subjectsAttendance.subject}"> </td>
+                <td th:text="${subjectsAttendance.getStatistic() + '%'}" style="text-align: center"> </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
+<th:block th:insert="fragments/footer :: footer"/>
 <script type="text/javascript" th:inline="javascript">
 
     const col_chart_data = /*[[${monthlyAttendance}]]*/'noValue';
@@ -136,6 +190,7 @@
 
         var options = {
             legend: { position: "none" },
+            colors: ['#333333']
         };
 
         var materialChart = new google.charts.Bar(document.getElementById('chart_col'));
@@ -156,6 +211,9 @@
 
         var options = {
             legend: { position: "none" },
+            series: {
+                0: {color: '#333333'},
+            }
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('chart_line'));

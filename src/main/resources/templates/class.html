@@ -7,8 +7,8 @@
     <meta th:name="_csrf" th:content="${_csrf.token}"/>
     <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
 
-    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Prompt&display=swap" rel="stylesheet">
 
     <!--  datatables  -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
@@ -18,61 +18,41 @@
 </head>
 
 <body>
-<div id="wrapper">
-    <div id="sidebar-wrapper">
-        <div th:insert="fragments/sidebar :: sidebar"></div>
-    </div>
-    <div id="page-content-wrapper">
-        <div id="page-content">
-            <div class="row">
-                <div class="col-md-12 main-content main-center">
-                    <h1>Students list</h1>
-                    <div sec:authorize="hasRole('ADMIN')">
-                        <a th:onclick="'javascript:deleteEntity(\'' + ${classId} + '\',\''+ 'class' + '\');'"
-                           class="button-style" style="position: absolute; top: 5px; right: 240px; background-color: #D72729;">Delete class</a>
-
-                        <a th:href="@{/admin/class/{id}/edit (id=${classId})}" class="button-style" style="position: absolute; top: 5px; right: 130px;">Edit class</a>
-                        <a class="button-style" style="position: absolute; top: 5px; right: 5px" href="/student/add">Add student</a>
-                    </div>
-                    <table  id="student-list" class="table-style">
-                        <thead>
-                        <tr class="first-row">
-                            <td>Name</td>
-                            <td>Class</td>
-                            <td>Program</td>
-                            <td>Faculty</td>
-                            <td>Birthday</td>
-                            <td>Avg. mark</td>
-                            <td>Attend. %</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each=" student : ${students}">
-                            <td ><a th:href="@{/student/{id} (id = ${student.studentId})}" th:text="${student.name}"></a></td>
-                            <td contenteditable='true' th:text="${student.studentClass.classCode}"></td>
-                            <td th:text="${student.studentClass.program}"></td>
-                            <td th:text="${student.studentClass.faculty}"></td>
-                            <td th:text="${student.birthday}"> </td>
-                            <td th:text="${student.avgMark}"></td>
-                            <td th:text="${student.attendancePercentage} + '%'"></td>
-                        </tr>
-                        </tbody>
-                        <hr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+<th:block th:insert="fragments/header :: header"/>
+<div class="wrapper">
+    <h1 style="float: left" th:text="${classCode} + ' students'"></h1>
+    <th:block sec:authorize="hasRole('ADMIN')" >
+        <a class="link-button" style="margin-top: 50px; float: right; margin-right: 10vw" href="/student/add">Add student</a>
+        <a th:href="@{/admin/class/{id}/edit (id=${classId})}" class="link-button" style="margin-top: 50px; float: right; margin-right: 20px">Edit class</a>
+        <a th:onclick="'javascript:deleteEntity(\'' + ${classId} + '\',\''+ 'class' + '\');'"
+           class="link-button" style="margin-top: 50px; float: right; margin-right: 20px">Delete class</a>
+    </th:block>
+    <table id="datalist">
+        <thead>
+        <tr>
+            <td>Name</td>
+            <td>Class</td>
+            <td>Program</td>
+            <td>Faculty</td>
+            <td>Birthday</td>
+            <td>Avg. mark</td>
+            <td>Attend. %</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each=" student : ${students}">
+            <td ><a th:href="@{/student/{id} (id = ${student.studentId})}" th:text="${student.name}"></a></td>
+            <td contenteditable='true' th:text="${student.studentClass.classCode}"></td>
+            <td th:text="${student.studentClass.program}"></td>
+            <td th:text="${student.studentClass.faculty}"></td>
+            <td th:text="${student.birthday}"> </td>
+            <td th:text="${student.avgMark}"></td>
+            <td th:text="${student.attendancePercentage} + '%'"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
-<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
-<script th:inline="javascript">
-    $(document).ready(function() {
-        $('#student-list').DataTable();
-    } );
-    document.getElementById("student-list").addEventListener("input", inputEvt => {
-        console.log("input event fired");
-    }, false);
-</script>
+<th:block th:insert="fragments/footer :: footer"/>
+<script th:inline="javascript" th:src="@{/js/script.js}"></script>
 </body>
 </html>

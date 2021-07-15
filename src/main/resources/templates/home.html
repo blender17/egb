@@ -3,38 +3,37 @@
 <head>
     <meta charset="UTF-8" />
     <title>Welcome, [[${#httpServletRequest.remoteUser}]]!</title>
-    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
+
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Prompt&display=swap" rel="stylesheet">
 </head>
 
 <body>
-<div id="wrapper">
-    <div id="sidebar-wrapper">
-        <div th:insert="fragments/sidebar :: sidebar"></div>
-    </div>
-    <div id="page-content-wrapper">
-        <div id="page-content">
-                <div class="row">
-                    <div class="col-md-12 main-content main-center">
-                        <h1>Your classes list</h1>
-                        <th:block th:each="studClass : ${studentClasses}">
-                            <div>
-                                <a th:text="${studClass.classCode}" th:href="@{/class/{id} (id = ${studClass.classId})}"></a>
-                                <table>
-                                <tr th:each="mapEntry : ${studClass.subjects}">
-                                    <td>
-                                        <a th:text="${mapEntry.value}" th:href="@{/gradebook/{class}/{subject} (class = ${studClass.classId}, subject = ${mapEntry.key})}"></a>
-                                    </td>
-                                <tr>
-                            </table>
-                            </div>
-                        </th:block>
-                    </div>
-                </div>
+<th:block th:insert="fragments/header :: header"/>
+<div class="wrapper">
+    <h1>Your classes list</h1>
+    <th:block th:each="studClass : ${studentClasses}">
+        <div style="float: left">
+            <table class="table-card">
+                <thead>
+                <tr>
+                    <td>
+                        <a th:text="${studClass.classCode}" th:href="@{/class/{id} (id = ${studClass.classId})}" style="color: #FFFFFF"></a>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="mapEntry : ${studClass.subjects}">
+                    <td>
+                        <a th:text="${mapEntry.value}" th:href="@{/gradebook/{class}/{subject} (class = ${studClass.classId}, subject = ${mapEntry.key})}"></a>
+                    </td>
+                </tr>
+                <tr style="height: 100%"><td></td></tr>
+                </tbody>
+            </table>
         </div>
-    </div>
+    </th:block>
 </div>
-
-<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+<th:block th:insert="fragments/footer :: footer"/>
 </body>
 </html>

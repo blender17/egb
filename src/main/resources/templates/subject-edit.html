@@ -3,33 +3,20 @@
 <head>
   <meta charset="UTF-8"/>
   <title>Edit subject</title>
-  <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Prompt&display=swap" rel="stylesheet">
 </head>
 
 <body>
-<div id="wrapper">
-  <div id="sidebar-wrapper">
-    <div th:insert="fragments/sidebar :: sidebar"></div>
-  </div>
-  <div id="page-content-wrapper">
-    <div id="page-content">
-      <div class="row">
-        <div class="col-md-12 main-content main-center">
-          <h1>Add new class</h1>
-          <form action="#" th:action="@{/admin/subject/{id}/edit (id = ${subject.subjectId})}" th:object="${subject}" method="post" style="text-align: right; width: 60%">
-            <label>Subject name:
-              <input required type="text" th:field="*{name}" />
-            </label>
-            <br>
-            <input type="submit" value="Save" style="text-align: center">
-
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+<th:block th:insert="fragments/header :: header"/>
+<div class="wrapper">
+  <h1>Edit subject</h1>
+  <form action="#" th:action="@{/admin/subject/{id}/edit (id = ${subject.subjectId})}" th:object="${subject}" method="post">
+    <input required type="text" th:field="*{name}" placeholder="Name"/>
+    <input class="button-style" type="submit" value="Save" style="margin-left: 30px">
+  </form>
 </div>
-<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<th:block th:insert="fragments/footer :: footer"/>
 </body>
 </html>

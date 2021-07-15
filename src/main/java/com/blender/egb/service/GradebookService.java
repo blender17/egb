@@ -50,6 +50,15 @@ public class GradebookService {
 	    for (GradebookDTO gradebook : gradebooks) {
 		    dates.add(gradebook.getDate());
 	    }
+
+	    String classCode = "";
+	    String subject = subjectsRepository.getById(subjectId).getName();
+	    if (!students.isEmpty()) {
+	    	classCode = students.get(0).getStudentClass().getClassCode();
+	    }
+
+	    model.addAttribute("classCode", classCode);
+	    model.addAttribute("subject", subject);
 	    model.addAttribute("gradebooks", gradebooks);
 	    model.addAttribute("dates", dates);
 	    model.addAttribute("students", studentsNames);

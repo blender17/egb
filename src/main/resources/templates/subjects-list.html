@@ -8,10 +8,7 @@
     <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
 
     <link rel="stylesheet" th:href="@{/css/style.css}">
-
-    <!--  bootstrap  -->
-    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
-    <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Prompt&display=swap" rel="stylesheet">
 
     <!--  datatables  -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
@@ -20,39 +17,29 @@
 </head>
 
 <body>
-<div id="wrapper">
-    <div id="sidebar-wrapper">
-        <div th:insert="fragments/sidebar :: sidebar"></div>
-    </div>
-    <div id="page-content-wrapper">
-        <div id="page-content">
-            <div class="row">
-                <div class="col-md-12 main-content main-center">
-                    <a class="button-style" style="position: absolute; top: 5px; right: 5px" href="/admin/subject/add">Add subject</a>
-                    <h1>Subjects list</h1>
-                    <table id="datalist" class="table-style">
-                        <thead>
-                        <tr class="first-row">
-                            <td>Name</td>
-                            <td></td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each=" subject : ${subjects}">
-                            <td th:text="${subject.name}"></td>
-                            <td width="100px">
-                                <a th:href="@{/admin/subject/{id}/edit (id = ${subject.subjectId})}">edit</a>
-                                <a href="" th:onclick="'javascript:deleteEntity(\'' + ${subject.subjectId} + '\',\''+ 'subject' + '\');'">delete</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                        <hr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+<th:block th:insert="fragments/header :: header"/>
+<div class="wrapper">
+    <a class="link-button" style="margin-top: 50px; float: right; margin-right: 10vw" href="/admin/subject/add">Add subject</a>
+    <h1>Subjects list</h1>
+    <table id="datalist">
+        <thead>
+        <tr>
+            <td>Name</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each=" subject : ${subjects}">
+            <td th:text="${subject.name}"></td>
+            <td width="100px">
+                <a th:href="@{/admin/subject/{id}/edit (id = ${subject.subjectId})}">edit</a>
+                <a href="" th:onclick="'javascript:deleteEntity(\'' + ${subject.subjectId} + '\',\''+ 'subject' + '\');'">delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+<th:block th:insert="fragments/footer :: footer"/>
 <script th:inline="javascript" th:src="@{/js/script.js}"></script>
 </body>
 </html>

@@ -6,49 +6,90 @@
   <title>Admin page</title>
 
   <link rel="stylesheet" th:href="@{/css/style.css}">
-  <!--               bootstrap                     -->
-  <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
-  <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Prompt&display=swap" rel="stylesheet">
 </head>
 
 <body>
-<div id="wrapper">
-  <div id="sidebar-wrapper">
-    <div th:insert="fragments/sidebar :: sidebar"></div>
+<th:block th:insert="fragments/header :: header"/>
+<div class="wrapper">
+  <div style="float: left">
+    <table class="table-card">
+      <thead>
+      <tr>
+        <td>Users options</td>
+      </tr>
+      </thead>
+      <tr>
+        <td><a th:href="@{/admin/user/add}">Add user</a></td>
+      </tr>
+      <tr>
+        <td><a th:href="@{/admin/users}">All users list</a></td>
+      </tr>
+      <tr style="height: 100%"><td></td></tr>
+    </table>
   </div>
-  <div id="page-content-wrapper">
-    <div id="page-content">
-      <div class="row">
-        <div class="col-md-12 main-content main-center">
-          <div>
-            <p>Users options</p>
-            <a th:href="@{/admin/user/add}">Add user</a>
-            <a th:href="@{/admin/users}">All users list</a>
-          </div>
-          <div>
-            <p>Teacher options</p>
-            <a th:href="@{/admin/user/add}">Add teacher</a>
-            <a th:href="@{/admin/teachers}">Teachers list</a>
-<!--            <a th:href="@{/admin/teachers/subjects}">Teacher's subjects</a>-->
-            <a th:href="@{/admin/teacher/bind}">Bind teacher to class</a>
-          </div>
-          <div>
-            <p>Student options</p>
-            <a th:href="@{/admin/student/add}">Add student</a>
-            <a th:href="@{/admin/students}">Students list</a>
-          </div>
-          <div>
-            <p>Classes options</p>
-            <a th:href="@{/admin/class/add}">Add class</a>
-            <a th:href="@{/admin/classes}">Classes list</a>
-            <a th:href="@{/admin/subject/add}">Add subject</a>
-            <a th:href="@{/admin/subjects}">Subjects list</a>
-            <a th:href="@{/admin/classes/subjects}">Classes and subjects</a>
-          </div>
-        </div>
-      </div>
-    </div>
+
+  <div style="float: left">
+    <table class="table-card">
+      <thead>
+      <tr>
+        <td>Teacher options</td>
+      </tr>
+      </thead>
+      <tr>
+        <td><a th:href="@{/admin/user/add}">Add teacher</a></td>
+      </tr>
+      <tr>
+        <td><a th:href="@{/admin/teachers}">Teachers list</a></td>
+      </tr>
+      <tr>
+        <td><a th:href="@{/admin/teacher/bind}">Bind teacher to class</a></td>
+      </tr>
+      <tr style="height: 100%"><td></td></tr>
+    </table>
   </div>
+
+  <div style="float: left">
+    <table class="table-card">
+      <thead>
+      <tr>
+        <td>Student options</td>
+      </tr>
+      </thead>
+      <tr style="height: 20px">
+        <td><a th:href="@{/admin/student/add}">Add student</a></td>
+      </tr>
+      <tr>
+        <td><a th:href="@{/admin/students}">Students list</a></td>
+      </tr>
+      <tr style="height: 100%"><td></td></tr>
+    </table>
+  </div>
+
+  <div style="float: left">
+    <table class="table-card">
+      <thead>
+      <tr>
+        <td>Classes options</td>
+      </tr>
+      </thead>
+      <tr>
+        <td><a th:href="@{/admin/class/add}">Add class</a></td>
+      </tr>
+      <tr>
+        <td><a th:href="@{/admin/classes}">Classes list</a></td>
+      </tr>
+      <tr>
+        <td><a th:href="@{/admin/subject/add}">Add subject</a></td>
+      </tr>
+      <tr>
+        <td><a th:href="@{/admin/subjects}">Subjects list</a></td>
+      </tr>
+      <tr style="height: 100%"><td></td></tr>
+    </table>
+  </div>
+
 </div>
+<th:block th:insert="fragments/footer :: footer"/>
 </body>
 </html>

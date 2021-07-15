@@ -3,54 +3,40 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Bind teacher to class</title>
-
-    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Prompt&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
-<div id="wrapper">
-    <div id="sidebar-wrapper">
-        <div th:insert="fragments/sidebar :: sidebar"></div>
-    </div>
-    <div id="page-content-wrapper">
-        <div id="page-content">
-                <div class="row">
-                    <div class="col-md-12 main-content main-center">
-                        <h1>Add new class</h1>
-                        <form action="#" th:action="@{/admin/teacher/bind}" th:object="${classSubject}" method="post" style="text-align: right; width: 60%">
-                            <label for="class">Class:</label>
-                            <select id="class" required th:name="studentClassId">
-                                <option th:each="class : ${studentClasses}"
-                                        th:value="${class.classId}"
-                                        th:text="${class.classCode}">
-                                </option>
-                            </select>
-                            <br>
-                            <label for="teacher">Teacher:</label>
-                            <select id="teacher" required th:name="teacherId">
-                                <option th:each="teacher : ${teachers}"
-                                        th:value="${teacher.userId}"
-                                        th:text="${teacher.name}">
-                                </option>
-                            </select>
-                            <br>
-                            <label for="subject">Subject:</label>
-                            <select id="subject" required th:name="subjectId">
-                                <option th:each="subject : ${subjects}"
-                                        th:value="${subject.subjectId}"
-                                        th:text="${subject.name}">
-                                </option>
-                            </select>
-                            <br>
-                            <input type="submit" value="Bind teacher" style="text-align: center">
-
-                        </form>
-                    </div>
-            </div>
-        </div>
-    </div>
+<th:block th:insert="fragments/header :: header"/>
+<div class="wrapper">
+    <h1>Bind teacher to class</h1>
+    <form action="#" th:action="@{/admin/teacher/bind}" th:object="${classSubject}" method="post">
+        <label for="class">Class:</label>
+        <select id="class" required th:name="studentClassId" >
+            <option th:each="class : ${studentClasses}"
+                    th:value="${class.classId}"
+                    th:text="${class.classCode}">
+            </option>
+        </select>
+        <label for="teacher" style="margin-left: 30px">Teacher:</label>
+        <select id="teacher" required th:name="teacherId">
+            <option th:each="teacher : ${teachers}"
+                    th:value="${teacher.userId}"
+                    th:text="${teacher.name}">
+            </option>
+        </select>
+        <label for="subject" style="margin-left: 30px">Subject:</label>
+        <select id="subject" required th:name="subjectId">
+            <option th:each="subject : ${subjects}"
+                    th:value="${subject.subjectId}"
+                    th:text="${subject.name}">
+            </option>
+        </select>
+        <input class="button-style" type="submit" value="Bind teacher" style="margin-left: 30px">
+    </form>
 </div>
-<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+<th:block th:insert="fragments/footer :: footer"/>
 </body>
 </html>

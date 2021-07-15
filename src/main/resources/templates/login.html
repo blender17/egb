@@ -5,36 +5,20 @@
     <meta charset="UTF-8"/>
     <title>Welcome to EGB</title>
     <link type="text/css" rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Prompt&display=swap" rel="stylesheet">
 </head>
 
 <body>
-<div id="wrapper">
-    <div id="page-content-wrapper">
-        <div id="page-content">
-            <div class="row">
-                <div class="col-md-12 main-content main-center">
-                    <p>Welcome to Electronic Grade Book. Please login to continue.</p>
-                    <form th:action="@{/login}" method="post">
-                        <label for="username">User name:
-                            <input id="username" type="text" name="username" placeholder="Username">
-                        </label>
-                        <br>
-                        <label for="password">Password:
-                            <input id="password" type="password" name="password" placeholder="Password">
-                        </label>
-                        <br>
-                        <input id="login" type="submit" value="Log in"/>
-                    </form>
-                    <br>
-                    <br>
-                    <a class="gh-btn" href="https://github.com/blender17/egb" rel="noopener noreferrer" target="_blank" aria-label="Source code">
-                        <span class="gh-ico" aria-hidden="true"></span>
-                        <span class="gh-text">Source code</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+<div style="text-align: center">
+    <h1>Welcome to Electronic Grade Book. Please login to continue.</h1>
+    <form th:action="@{/login}" method="post" style="margin-top: 20vh">
+        <input type="text" name="username" placeholder="Username">
+        <br>
+        <input type="password" name="password" placeholder="Password">
+        <br>
+        <input class="button-style" id="login" type="submit" value="Log in" style="margin-top: 30px"/>
+    </form>
 </div>
+<th:block th:insert="fragments/footer :: footer"/>
 </body>
 </html>

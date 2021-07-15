@@ -3,82 +3,72 @@
 <head>
     <title>Add new user</title>
     <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Prompt&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div id="wrapper">
-        <div id="sidebar-wrapper">
-            <div th:insert="fragments/sidebar :: sidebar"></div>
+<th:block th:insert="fragments/header :: header"/>
+<div class="wrapper">
+    <h1>Add new user</h1>
+    <form action="#" th:action="@{/admin/user/add}" th:object="${user}" method="post">
+        <div style="float: left; text-align: left">
+            <input id="firstName" type="text" th:field="*{firstName}" placeholder="First name"/>
+            <br>
+            <input id="phoneNumber" th:field="*{phoneNumber}" type="text" placeholder="Phone number">
+            <br>
+
+            <input id="position" th:field="*{position}" type="text" placeholder="Position">
+            <br>
+            <label for="role">Role:</label>
+            <select id="role" required th:name="role">
+                <option th:value="'TEACHER'" th:text="TEACHER"></option>
+                <!--                    <option th:value="'STUDENT'" th:text="STUDENT"></option>-->
+                <option th:value="'ADMIN'" th:text="ADMIN"></option>
+                <!--                    <option th:value="'USER'" th:text="USER"></option>-->
+            </select>
         </div>
-        <div id="page-content-wrapper">
-            <div id="page-content">
-                    <div class="row">
-                        <div class="col-md-12 main-content main-center">
-                            <h1>Add new user</h1>
-                            <form action="#" th:action="@{/admin/user/add}" th:object="${user}" method="post">
-                                <div class="two-column">
-                                    <div class="column">
-                                        <label for="firstName">First name:</label>
-                                        <input id="firstName" type="text" th:field="*{firstName}" />
-                                        <br>
-                                        <label for="lastName">Last name:</label>
-                                        <input id="lastName" type="text" th:field="*{lastName}" />
-                                        <br>
-                                        <label for="middleName">Middle name:</label>
-                                        <input id="middleName" type="text" th:field="*{middleName}" />
-                                        <br>
-                                        <label for="position">Position:</label>
-                                        <input id="position" th:field="*{position}" type="text">
-                                        <br>
-                                        <label for="academicDegree"> Academic degree:</label>
-                                        <input id="academicDegree" th:field="*{academicDegree}" type="text">
-                                        <br>
-                                        <label for="gender">Gender:</label>
-                                        <select id="gender" th:field="*{gender}">
-                                            <option th:value="'Male'" th:text="Male"></option>
-                                            <option th:value="'Female'" th:text="Female"></option>
-                                        </select>
-                                        <br>
-                                        <label for="birthday"> Birthday:</label>
-                                        <input id="birthday" th:field="*{birthday}" type="date" value="2000-01-01">
-                                        <br>
-                                        <label for="phoneNumber"> Phone number:</label>
-                                        <input id="phoneNumber" th:field="*{phoneNumber}" type="text">
-                                        <br>
-                                        <label for="email"> Email:</label>
-                                        <input id="email" th:field="*{email}" type="text">
-                                        <br>
-                                        <label for="address"> Address:</label>
-                                        <input id="address" th:field="*{address}" type="text">
-                                        <br>
-                                        <label for="role">Role:</label>
-                                        <select id="role" required th:name="role">
-                                            <option th:value="'TEACHER'" th:text="TEACHER"></option>
-                                            <option th:value="'STUDENT'" th:text="STUDENT"></option>
-                                            <option th:value="'ADMIN'" th:text="ADMIN"></option>
-                                            <option th:value="'USER'" th:text="USER"></option>
-                                        </select>
-                                        <br>
-                                        <label for="username">Username:</label>
-                                        <input id="username" required th:field="*{username}" type="text">
-                                        <br>
-                                        <label for="password">Password:</label>
-                                        <input id="password" required th:field="*{password}" type="password">
-                                        <br>
-                                        <label for="passwordConfirm">Confirm password:</label>
-                                        <input id="passwordConfirm" required th:field="*{passwordConfirm}" type="password">
-                                        <br>
-                                    </div>
-                                </div>
-                                <input type="submit" value="Add user" style="text-align: center">
-                            </form>
-                        </div>
-                </div>
-            </div>
+
+        <div style="float: left; text-align: left; margin-left: 30px">
+            <input id="middleName" type="text" th:field="*{middleName}" placeholder="Middle name"/>
+            <br>
+            <input id="address" th:field="*{address}" type="text" placeholder="Address">
+            <br>
+            <input id="academicDegree" th:field="*{academicDegree}" type="text" placeholder="Academic degree">
         </div>
-    </div>
-    <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <div style="float: left; text-align: left; margin-left: 30px">
+            <input id="lastName" type="text" th:field="*{lastName}" placeholder="Last name"/>
+            <br>
+            <input id="email" th:field="*{email}" type="text" placeholder="Email">
+            <br>
+        </div>
+
+        <div style="float: left; text-align: left; margin-left: 30px">
+            <input type="radio" name="gender" value="Male" th:value="'Male'" id="genderMale">
+            <label for="genderMale">Male</label>
+            <input type="radio" name="gender" value="Female" th:value="'Female'" id="genderFemale">
+            <label for="genderFemale">Female</label>
+            <br>
+            <br>
+            <label for="birthday"> Birthday:</label>
+            <input id="birthday" th:field="*{birthday}" type="date">
+            <br>
+        </div>
+
+        <div style="clear: left; ">
+            <input id="username" required th:field="*{username}" type="text" placeholder="Username">
+            <input id="password" required th:field="*{password}" type="password" placeholder="Password" style="margin-left: 30px">
+            <input id="passwordConfirm" required th:field="*{passwordConfirm}" type="password" placeholder="Confirm password" style="margin-left: 30px">
+
+        </div>
+        <br>
+        <br>
+        <div style="text-align: center; width: 100%">
+        <input class="button-style" type="submit" value="Add user">
+        </div>
+    </form>
+</div>
+<th:block th:insert="fragments/footer :: footer"/>
 </body>
 </html>
